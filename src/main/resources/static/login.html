@@ -88,6 +88,10 @@
         <input type="email" id="email" name="email" placeholder="Email" required>
         <div id="email-error" class="error-message"></div>
 
+        <label for="department">Department:</label>
+        <input type="text" id="department" name="department" placeholder="Department" required>
+        <div id="department-error" class="error-message"></div>
+
         <p>By Clicking Sign In, You agree to our Terms and Conditions.</p>
         <button type="submit">Sign In</button>
     </form>
@@ -96,6 +100,22 @@
 
 <script>
     $(document).ready(function() {
+        function validateName() {
+            var name = $('#name').val();
+            var regex = /^[a-zA-Z]+$/;
+
+            if (name.length < 2) {
+                $('#name-error').text('Name must be at least 2 characters long.').show();
+                return false;
+            } else if (!regex.test(name)) {
+                $('#name-error').text('Name cannot contain special characters or numbers.').show();
+                return false;
+            }
+
+            $('#name-error').hide();
+            return true;
+        }
+
         function validateEmail() {
             var email = $('#email').val();
             var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -107,36 +127,39 @@
             return true;
         }
 
-        function validateName() {
-            var name = $('#name').val();
+        function validateDepartment() {
+            var department = $('#department').val();
             var regex = /^[a-zA-Z]+$/;
 
-            if (name.length < 2) {
-                $('#name-error').text('First name must be at least 2 characters long.').show();
+            if (department.length < 2) {
+                $('#department-error').text('Department must be at least 2 characters long.').show();
                 return false;
-            } else if (!regex.test(name)) {
-                $('#name-error').text('First name cannot contain special characters or numbers.').show();
+            } else if (!regex.test(department)) {
+                $('#department-error').text('Department cannot contain special characters or numbers.').show();
                 return false;
             }
 
-            $('#name-error').hide();
+            $('#department-error').hide();
             return true;
         }
 
-        $('#email').on('input', validateEmail);
         $('#name').on('input', validateName);
+        $('#email').on('input', validateEmail);
+        $('#department').on('input', validateDepartment);
 
         $('#loginForm').on('submit', function(event) {
             event.preventDefault(); // Prevent default form submission
 
-            var emailValid = validateEmail();
             var nameValid = validateName();
+            var emailValid = validateEmail();
+            var departmentValid = validateDepartment();
 
-            if (emailValid && nameValid) {
+            if (nameValid && emailValid && departmentValid) {
                 // Form is valid, proceed with posting data
                 const formData = {
-                    email: $('#email').val(),
                     name: $('#name').val(),
+                    email: $('#email').val(),
+                    department: $('#department').val()
                 };
 
                 fetch('/loginauth', {

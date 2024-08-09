@@ -3,6 +3,7 @@ package com.example.teamer.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table (name="Department")
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,58 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+    <title>Teamer</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background-color: #f4f4f4;
         }
-        .about-container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-            width: 400px;
+        header, footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        nav {
+            background-color: #444;
+            padding: 10px;
             text-align: center;
         }
-        h1 {
-            color: #1a73e8;
-            margin-bottom: 20px;
-        }
-        p {
-            color: #5f6368;
-            font-size: 18px;
-            line-height: 1.6;
-        }
-        a {
-            display: inline-block;
+        nav a {
+            color: white;
+            margin: 0 15px;
             text-decoration: none;
-            color: #1a73e8;
-            background-color: #ffffff;
-            border: 2px solid #1a73e8;
-            padding: 10px 20px;
-            border-radius: 20px;
-            margin: 10px;
-            transition: background-color 0.3s, color 0.3s;
         }
-        a:hover {
-            background-color: #1a73e8;
-            color: #ffffff;
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .section {
+            background-color: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .section h2 {
+            margin-top: 0;
+        }
+        .flex-row {
+            display: flex;
+            justify-content: space-between;
+        }
+        .flex-column {
+            display: flex;
+            flex-direction: column;
+        }
+        .list, .form, .project-list {
+            flex: 1;
+            margin: 10px;
+        }
+        .list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .list li, .project-list li {
+            padding: 10px;
+            background-color: #f9f9f9;
+            margin-bottom: 5px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+        .form input, .form select {
+            padding: 8px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .form button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form button:hover {
+            background-color: #555;
         }
     </style>
 </head>
 <body>
-<div class="about-container">
-    <h1>Welcome</h1>
-    <p>The only application that you will ever need for management.</p>
-    <br>
-    <a href="login.html">Get Started</a>
+
+<header>
+    <h1>Employee Management System</h1>
+</header>
+
+<nav>
+    <a href="#employees">Employee Management</a>
+    <a href="#departments">Department Management</a>
+    <a href="#projects">Projects</a>
+</nav>
+
+<div class="container">
+
+    <!-- Employee Management Section -->
+    <div id="employees" class="section">
+        <h2>Employee Management</h2>
+        <div class="flex-row">
+            <!-- Employee List -->
+            <div class="list">
+                <h3>Employee List</h3>
+                <ul id="employee-list">
+                    <!-- Employee items will be populated here -->
+                </ul>
+            </div>
+            <!-- Employee Details Form -->
+            <form class="form" method="post">
+                <h3>Employee Details</h3>
+                <input type="text" id="employee-name" placeholder="Employee Name">
+                <input type="email" id="employee-email" placeholder="Employee Email">
+                <select id="employee-department">
+                    <option value="">Select Department</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Designing">Designing</option>
+                    <option value="Legal">Legal</option>
+                </select>
+                <button type="button" id="add-employee">Add/Edit Employee</button>
+                <button type="button" id="delete-employee">Delete Employee</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Project Management Section -->
+    <div id="projects" class="section">
+        <h2>Project Management</h2>
+        <div class="project-list">
+            <h3>Project List</h3>
+            <ul>
+                <li>Project 1 (Assigned to Employee 1)</li>
+                <li>Project 2 (Assigned to Employee 2)</li>
+            </ul>
+            <button id="add-project">Add Project</button>
+            <button id="edit-project">Edit Project</button>
+            <button id="delete-project">Delete Project</button>
+        </div>
+    </div>
+
+    <div id="departments" class="section">
+        <h2>Department Management</h2>
+        <div class="flex-row">
+            <!-- Department List -->
+            <div class="list">
+                <h3>Departments List</h3>
+                <ul id="department-list">
+                    <li data-department="Engineering">Engineering</li>
+                    <li data-department="Designing">Designing</li>
+                    <li data-department="Legal">Legal</li>
+                </ul>
+            </div>
+            <!-- Department Details -->
+            <div class="form">
+                <h3>Department Details</h3>
+                <input type="text" id="department-details" value="Select a department" readonly>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle department selection
+        document.addEventListener('DOMContentLoaded', function () {
+            const departmentList = document.getElementById('department-list');
+            const departmentDetails = document.getElementById('department-details');
+
+            departmentList.addEventListener('click', function (event) {
+                if (event.target.tagName === 'LI') {
+                    // Get the selected department's name from the clicked <li>
+                    const selectedDepartment = event.target.getAttribute('data-department');
+
+                    // Check the selected department and update the department details
+                    if (selectedDepartment === "Engineering") {
+                        departmentDetails.value = "We deal with engineering.";
+                    } else if (selectedDepartment === "Design") {
+                        departmentDetails.value = "We deal with design.";
+                    } else if (selectedDepartment === "Legal") {
+                        departmentDetails.value = "We deal with legal matters.";
+                    } else {
+                        departmentDetails.value = "I have not heard of a department like that.";
+                    }
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const addEmployeeBtn = document.getElementById('add-employee');
+            const deleteEmployeeBtn = document.getElementById('delete-employee');
+
+            addEmployeeBtn.addEventListener('click', function () {
+                const name = document.getElementById('employee-name').value;
+                const email = document.getElementById('employee-email').value;
+                const department = document.getElementById('employee-department').value;
+
+                if (!name || !email || !department) {
+                    alert("Please fill out all fields.");
+                    return;
+                }
+
+                const employee = {
+                    name: name,
+                    email: email,
+                    department: department  // Assuming the department is passed as an object
+                };
+
+                fetch('/api/employees', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(employee),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert("Employee added/updated successfully.");
+                        // Optionally refresh the employee list here
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+
+            deleteEmployeeBtn.addEventListener('click', function () {
+                const email = document.getElementById('employee-email').value;
+                fetch(`/api/employees/${email}`, {
+                    method: 'DELETE',
+                })
+                    .then(() => {
+                        alert("Employee deleted successfully.");
+                        // Optionally refresh the employee list here
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Fetch employee list from the REST API
+            fetch('/api/employees')
+                .then(response => response.json())
+                .then(data => {
+                    const employeeList = document.getElementById('employee-list');
+                    employeeList.innerHTML = ''; // Clear any existing content
+
+                    // Iterate over the employee data and create list items
+                    data.forEach(employee => {
+                        const li = document.createElement('li');
+                        li.textContent = `${employee.name} (${employee.email})`;
+                        employeeList.appendChild(li);
+                    });
+                })
+                .catch(error => console.error('Error fetching employee data:', error));
+        });
+    </script>
+
 </div>
+
+<footer>
+    <p>&copy; 2024 Teamer </p>
+</footer>
 </body>
 </html>

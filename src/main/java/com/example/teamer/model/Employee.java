@@ -3,6 +3,7 @@ package com.example.teamer.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table (name="Employee")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,13 +20,12 @@ public class Employee {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    public String Employee() {
-        return null;
-    }
-
     public Employee(String name, String email) {
         this.name = name;
         this.email = email;
+    }
+
+    public Employee() {
     }
 
     public Integer getId() {
@@ -59,5 +59,4 @@ public class Employee {
     public void setDepartment(Department department) {
         this.department = department;
     }
-
 }
