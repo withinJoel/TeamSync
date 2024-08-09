@@ -40,7 +40,7 @@
             font-weight: bold;
             color: #5f6368;
         }
-        input[type="text"], input[type="password"], input[type="number"] {
+        input[type="text"], input[type="email"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 5px; /* Adjusted for space before the error message */
@@ -80,13 +80,13 @@
 <div class="login-container">
     <h1>Teamer</h1>
     <form id="loginForm" action="/loginauth" method="post" novalidate>
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email" placeholder="Email" required>
-        <div id="email-error" class="error-message"></div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Name" required>
+        <div id="name-error" class="error-message"></div>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" placeholder="Password" required>
-        <div id="password-error" class="error-message"></div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Email" required>
+        <div id="email-error" class="error-message"></div>
 
         <p>By Clicking Sign In, You agree to our Terms and Conditions.</p>
         <button type="submit">Sign In</button>
@@ -107,30 +107,36 @@
             return true;
         }
 
-        function validatePassword() {
-            var password = $('#password').val();
-            if (password.length < 4) {
-                $('#password-error').text('Password must be at least 6 characters long.').show();
+        function validateName() {
+            var name = $('#name').val();
+            var regex = /^[a-zA-Z]+$/;
+
+            if (name.length < 2) {
+                $('#name-error').text('First name must be at least 2 characters long.').show();
+                return false;
+            } else if (!regex.test(name)) {
+                $('#name-error').text('First name cannot contain special characters or numbers.').show();
                 return false;
             }
-            $('#password-error').hide();
+
+            $('#name-error').hide();
             return true;
         }
 
         $('#email').on('input', validateEmail);
-        $('#password').on('input', validatePassword);
+        $('#name').on('input', validateName);
 
         $('#loginForm').on('submit', function(event) {
             event.preventDefault(); // Prevent default form submission
 
             var emailValid = validateEmail();
-            var passwordValid = validatePassword();
+            var nameValid = validateName();
 
-            if (emailValid && passwordValid) {
+            if (emailValid && nameValid) {
                 // Form is valid, proceed with posting data
                 const formData = {
                     email: $('#email').val(),
-                    password: $('#password').val(),
+                    name: $('#name').val(),
                 };
 
                 fetch('/loginauth', {
