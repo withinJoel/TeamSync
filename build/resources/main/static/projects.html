@@ -83,9 +83,40 @@
         .collection-item:last-child {
             border-bottom: none;
         }
+        nav {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 0 10px;
+        }
+        nav ul {
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            list-style: none;
+        }
+        nav ul li a {
+            display: block;
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s, color 0.3s;
+        }
     </style>
 </head>
 <body>
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo left" style="color:#1a73e8;">TeamSync</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="/employees.html">Employees</a></li>
+            <li><a href="/departments.html">Departments</a></li>
+            <li><a href="/projects.html">Projects</a></li>
+        </ul>
+    </div>
+</nav>
 <div class="container">
     <h1>Projects</h1>
 
