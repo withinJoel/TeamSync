@@ -4,29 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employees</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #e8f0fe;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #1a73e8;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .btn-primary {
+            background-color: #1a73e8;
+            color: #ffffff;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #1558d6;
+            transform: scale(1.02);
+        }
+        .card {
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .card-content {
+            padding: 20px;
+        }
+        .input-field input, .input-field select {
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .input-field input:focus, .input-field select:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 1px 0 0 #1a73e8;
+        }
+        .collection-item {
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .collection-item:last-child {
+            border-bottom: none;
+        }
+        .btn-delete {
+            background-color: #e57373;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-delete:hover {
+            background-color: #d32f2f;
+            transform: scale(1.02);
+        }
+    </style>
 </head>
 <body>
-<h1>Employees</h1>
+<div class="container">
+    <h1>Employees</h1>
 
-<button onclick="showAddEmployeeForm()">Add Employee</button>
+    <button class="btn-primary" onclick="showAddEmployeeForm()">Add Employee</button>
 
-<div id="add-employee-form" style="display:none;">
-    <h2>Add Employee</h2>
-    <form id="employee-form">
-        <label for="employee-name">Name:</label>
-        <input type="text" id="employee-name" name="name" required>
-        <label for="employee-email">Email:</label>
-        <input type="email" id="employee-email" name="email" required>
-        <label for="department-id">Department:</label>
-        <select id="department-id" name="departmentId" required></select>
-        <button type="button" onclick="addEmployee()">Add</button>
-    </form>
+    <div id="add-employee-form" class="card" style="display:none;">
+        <div class="card-content">
+            <h2 class="card-title">Add Employee</h2>
+            <form id="employee-form">
+                <div class="input-field">
+                    <input type="text" id="employee-name" name="name" required>
+                    <label for="employee-name">Name</label>
+                </div>
+                <div class="input-field">
+                    <input type="email" id="employee-email" name="email" required>
+                    <label for="employee-email">Email</label>
+                </div>
+                <div class="input-field">
+                    <select id="department-id" name="departmentId" required></select>
+                    <label for="department-id">Department</label>
+                </div>
+                <button type="button" class="btn-primary" onclick="addEmployee()">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <h2 class="card-title">Employee List</h2>
+    <ul id="employee-list" class="collection"></ul>
 </div>
 
-<h2>Employee List</h2>
-<ul id="employee-list"></ul>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
     const employeeApiUrl = 'http://localhost:8080/api/employees';
     const departmentApiUrl = 'http://localhost:8080/api/departments';
@@ -43,6 +128,7 @@
                     option.textContent = department.name;
                     select.appendChild(option);
                 });
+                M.FormSelect.init(select); // Initialize Materialize select component
             });
     }
 
@@ -54,15 +140,11 @@
                 list.innerHTML = '';
                 data.forEach(employee => {
                     const listItem = document.createElement('li');
-                    listItem.textContent = `${employee.name} - ${employee.email}`;
-
-                    // Create delete button
-                    const deleteButton = document.createElement('button');
-                    deleteButton.textContent = 'Delete';
-                    deleteButton.onclick = () => deleteEmployee(employee.id);
-
-                    // Append delete button to list item
-                    listItem.appendChild(deleteButton);
+                    listItem.className = 'collection-item';
+                    listItem.innerHTML = `
+                        ${employee.name} - ${employee.email}
+                        <button class="btn-delete" onclick="deleteEmployee(${employee.id})">Delete</button>
+                    `;
                     list.appendChild(listItem);
                 });
             });

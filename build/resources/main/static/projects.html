@@ -4,43 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #1a73e8;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background-color: #1a73e8;
+            color: #ffffff;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #1558d6;
+            transform: scale(1.02);
+        }
+        .btn-delete {
+            background-color: #e57373;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-delete:hover {
+            background-color: #d32f2f;
+            transform: scale(1.02);
+        }
+        .input-field input, .input-field select {
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .input-field input:focus, .input-field select:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 1px 0 0 #1a73e8;
+        }
+        .collection-item {
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+        }
+        .collection-item:last-child {
+            border-bottom: none;
+        }
+    </style>
 </head>
 <body>
-<h1>Projects</h1>
+<div class="container">
+    <h1>Projects</h1>
 
-<button onclick="showAddProjectForm()">Add Project</button>
+    <button class="btn-primary" onclick="showAddProjectForm()">Add Project</button>
 
-<div id="add-project-form" style="display:none;">
-    <h2>Add Project</h2>
-    <form id="project-form">
-        <label for="project-name">Name:</label>
-        <input type="text" id="project-name" name="name" required>
-        <label for="project-description">Description:</label>
-        <input type="text" id="project-description" name="description" required>
-        <label for="employee-id">Assign to Employee:</label>
-        <select id="employee-id" name="employeeId" required></select>
-        <button type="button" onclick="addProject()">Add</button>
-    </form>
+    <div id="add-project-form" class="card" style="display:none;">
+        <div class="card-content">
+            <h2 class="card-title">Add Project</h2>
+            <form id="project-form">
+                <div class="input-field">
+                    <input type="text" id="project-name" name="name" required>
+                    <label for="project-name">Name</label>
+                </div>
+                <div class="input-field">
+                    <input type="text" id="project-description" name="description" required>
+                    <label for="project-description">Description</label>
+                </div>
+                <div class="input-field">
+                    <select id="employee-id" name="employeeId" required></select>
+                    <label for="employee-id">Assign to Employee</label>
+                </div>
+                <button type="button" class="btn-primary" onclick="addProject()">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="edit-project-form" class="card" style="display:none;">
+        <div class="card-content">
+            <h2 class="card-title">Edit Project</h2>
+            <form id="edit-project-form-content">
+                <input type="hidden" id="edit-project-id">
+                <div class="input-field">
+                    <input type="text" id="edit-project-name" name="name" required>
+                    <label for="edit-project-name">Name</label>
+                </div>
+                <div class="input-field">
+                    <input type="text" id="edit-project-description" name="description" required>
+                    <label for="edit-project-description">Description</label>
+                </div>
+                <div class="input-field">
+                    <select id="edit-employee-id" name="employeeId" required></select>
+                    <label for="edit-employee-id">Assign to Employee</label>
+                </div>
+                <button type="button" class="btn-primary" onclick="updateProject()">Update</button>
+            </form>
+        </div>
+    </div>
+
+    <h2 class="card-title">Project List</h2>
+    <ul id="project-list" class="collection"></ul>
 </div>
 
-<div id="edit-project-form" style="display:none;">
-    <h2>Edit Project</h2>
-    <form id="edit-project-form-content">
-        <input type="hidden" id="edit-project-id">
-        <label for="edit-project-name">Name:</label>
-        <input type="text" id="edit-project-name" name="name" required>
-        <label for="edit-project-description">Description:</label>
-        <input type="text" id="edit-project-description" name="description" required>
-        <label for="edit-employee-id">Assign to Employee:</label>
-        <select id="edit-employee-id" name="employeeId" required></select>
-        <button type="button" onclick="updateProject()">Update</button>
-    </form>
-</div>
-
-<h2>Project List</h2>
-<ul id="project-list"></ul>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
     const projectApiUrl = 'http://localhost:8080/api/projects';
     const employeeApiUrl = 'http://localhost:8080/api/employees';
@@ -60,6 +147,8 @@
                     select.appendChild(option);
                     editSelect.appendChild(option.cloneNode(true));
                 });
+                M.FormSelect.init(select); // Initialize Materialize select component
+                M.FormSelect.init(editSelect); // Initialize Materialize select component
             });
     }
 
@@ -71,11 +160,12 @@
                 list.innerHTML = '';
                 data.forEach(project => {
                     const listItem = document.createElement('li');
+                    listItem.className = 'collection-item';
                     listItem.innerHTML = `
-                        ${project.name || 'No name'} - ${project.description || 'No description'} (Assigned to: ${project.employee ? project.employee.name : 'Unassigned'})
-                        <button onclick="showEditProjectForm(${project.id})">Edit</button>
-                        <button onclick="deleteProject(${project.id})">Delete</button>
-                    `;
+                            ${project.name || 'No name'} - ${project.description || 'No description'} (Assigned to: ${project.employee ? project.employee.name : 'Unassigned'})
+                            <button class="btn-primary" onclick="showEditProjectForm(${project.id})">Edit</button>
+                            <button class="btn-delete" onclick="deleteProject(${project.id})">Delete</button>
+                        `;
                     list.appendChild(listItem);
                 });
             });
@@ -148,6 +238,7 @@
                 Array.from(editEmployeeSelect.options).forEach(option => {
                     option.selected = (option.value == project.employee?.id);
                 });
+                M.FormSelect.init(editEmployeeSelect); // Initialize Materialize select component
 
                 document.getElementById('edit-project-form').style.display = 'block';
                 document.getElementById('add-project-form').style.display = 'none';

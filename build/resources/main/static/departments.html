@@ -4,25 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Departments</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #e8f0fe;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #1a73e8;
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background-color: #1a73e8;
+            color: #ffffff;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #1558d6;
+            transform: scale(1.02);
+        }
+        .card {
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .card-content {
+            padding: 20px;
+        }
+        .input-field input {
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .input-field input:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 1px 0 0 #1a73e8;
+        }
+        .collection-item {
+            border-bottom: 1px solid #ddd;
+        }
+        .collection-item:last-child {
+            border-bottom: none;
+        }
+        .modal-footer {
+            padding: 16px;
+        }
+    </style>
 </head>
 <body>
-<h1>Departments</h1>
+<div class="container">
+    <h1 class="center-align">Departments</h1>
 
-<button onclick="showAddDepartmentForm()">Add Department</button>
+    <button class="btn-primary" onclick="showAddDepartmentForm()">Add Department</button>
 
-<div id="add-department-form" style="display:none;">
-    <h2>Add Department</h2>
-    <form id="department-form">
-        <label for="department-name">Name:</label>
-        <input type="text" id="department-name" name="name" required>
-        <button type="button" onclick="addDepartment()">Add</button>
-    </form>
+    <div id="add-department-form" class="card" style="display:none;">
+        <div class="card-content">
+            <h2 class="card-title">Add Department</h2>
+            <form id="department-form">
+                <div class="input-field">
+                    <input type="text" id="department-name" name="name" required>
+                    <label for="department-name">Name</label>
+                </div>
+                <button type="button" class="btn-primary" onclick="addDepartment()">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <h2 class="card-title">Department List</h2>
+    <ul id="department-list" class="collection"></ul>
 </div>
 
-<h2>Department List</h2>
-<ul id="department-list"></ul>
-
+<!-- Materialize JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
     const apiUrl = 'http://localhost:8080/api/departments';
 
@@ -34,6 +101,7 @@
                 list.innerHTML = '';
                 data.forEach(department => {
                     const listItem = document.createElement('li');
+                    listItem.className = 'collection-item';
                     listItem.textContent = department.name;
                     list.appendChild(listItem);
                 });
