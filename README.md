@@ -19,9 +19,10 @@ TeamSync is a comprehensive employee management and project tracking application
 10. Implement the Service Layer: ✅ 
 11. Create REST Controllers: ✅ 
 12. Handle Validation: ✅ 
-13. Test with Postman: ❌ (Have conducted few tests) (None shown any progress)
-14. Write Unit and Integration Tests: ✅ 
-15. Implement Basic Security (Optional): ✅
+13. Test with Postman: ❌ (Have conducted few tests)
+    * Able to get info from the backend.
+15. Write Unit and Integration Tests: ✅ 
+16. Implement Basic Security (Optional): ✅
   * (Secured in the HTML level)
 15. Prepare Documentation: ✅ (Almost)
 16. Deploy the Application: ❌ (Tried, but failed multiple times) (Working on it)
