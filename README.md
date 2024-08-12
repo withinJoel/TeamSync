@@ -14,7 +14,7 @@ CREATE DATABASE teamsync;
 USE teamsync_db;
 ```
 
-* create a table called `department`
+* Create a table called `department`
 
 ```
 CREATE TABLE department (
@@ -22,6 +22,8 @@ CREATE TABLE department (
   name VARCHAR(100) NOT NULL
 );
 
+* Create a table called `employee`
+```
 CREATE TABLE employee (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
@@ -29,7 +31,9 @@ CREATE TABLE employee (
   department_id BIGINT,
   FOREIGN KEY (department_id) REFERENCES department(id)
 );
-
+```
+* Create a table called `project`
+```
 CREATE TABLE project (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
