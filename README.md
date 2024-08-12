@@ -19,7 +19,6 @@ TeamSync is a comprehensive employee management and project tracking application
 12. Write Unit and Integration Tests: ✅ 
 13. Implement Basic Security (Optional): ✅
   * (Secured in the HTML level)
-  * Added `implementation 'org.springframework.boot:spring-boot-starter-security'` in the gradle.build (Enhances security in the backend level)
 15. Prepare Documentation: ✅ (Almost)
 16. Deploy the Application: ❌ (Tried, but failed multiple times) (Working on it)
 17. Code Review and Feedback: Pending
