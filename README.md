@@ -17,7 +17,7 @@ TeamSync is a comprehensive employee management and project tracking application
 10. Handle Validation: ✅ 
 11. Test with Postman: ❌ (Have conducted few tests)
 12. Write Unit and Integration Tests: ✅ 
-13. Implement Basic Security (Optional): ✅
+13. Implement Basic Security (Optional): ✅ (Secured in the HTML level)
 14. Prepare Documentation: ✅ (Almost)
 15. Deploy the Application: ❌ (Tried, but failed multiple times)
 16. Code Review and Feedback: Pending
