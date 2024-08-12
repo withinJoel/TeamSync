@@ -9,7 +9,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(22)
+        languageVersion = JavaLanguageVersion.of(22) // Set to OpenJDK 22
     }
 }
 
@@ -20,17 +20,12 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.33' // Specify the version of MySQL connector
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation 'mysql:mysql-connector-java:8.0.33' // or the latest version
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     testImplementation 'org.mockito:mockito-core:5.1.0'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    // Mockito core dependency
-    testImplementation 'org.mockito:mockito-core:4.8.0' // Use the latest version
-    // Mockito JUnit Jupiter dependency
-    testImplementation 'org.mockito:mockito-junit-jupiter:4.8.0' // Use the latest version
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.1.0'
 }
 
 tasks.named('test') {
