@@ -112,6 +112,8 @@
 <script>
     const employeeApiUrl = 'http://localhost:8080/api/employees';
     const departmentApiUrl = 'http://localhost:8080/api/departments';
+    // Create an empty array to store department names
+    const departmentNames = [];
 
     function fetchDepartments() {
         fetch(departmentApiUrl)
@@ -121,8 +123,12 @@
                 select.innerHTML = '';
                 data.forEach(department => {
                     const option = document.createElement('option');
-                    option.value = department.id;
-                    option.textContent = department.name;
+                    for (let i = 0; i < 11; i++) {
+                        if (department.id = i){
+                            option.textContent = department.name;
+                            departmentNames.push(department.name);
+                        }
+                    }
                     select.appendChild(option);
                 });
                 M.FormSelect.init(select); // Initialize Materialize select component
@@ -130,6 +136,7 @@
     }
 
     function fetchEmployees() {
+
         fetch(employeeApiUrl)
             .then(response => response.json())
             .then(data => {

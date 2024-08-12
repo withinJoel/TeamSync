@@ -15,13 +15,11 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    // Retrieve all employees
     @GetMapping
     public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 
-    // Create a new employee
     @PostMapping
     public Employee createEmployee(@RequestBody Employee employee) {
         return employeeService.createEmployee(employee);
