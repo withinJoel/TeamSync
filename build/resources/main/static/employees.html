@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employees</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<h1>Employees</h1>
+
+<button onclick="showAddEmployeeForm()">Add Employee</button>
+
+<div id="add-employee-form" style="display:none;">
+    <h2>Add Employee</h2>
+    <form id="employee-form">
+        <label for="employee-name">Name:</label>
+        <input type="text" id="employee-name" name="name" required>
+        <label for="employee-email">Email:</label>
+        <input type="email" id="employee-email" name="email" required>
+        <label for="department-id">Department:</label>
+        <select id="department-id" name="departmentId" required></select>
+        <button type="button" onclick="addEmployee()">Add</button>
+    </form>
+</div>
+
+<h2>Employee List</h2>
+<ul id="employee-list"></ul>
+
+<script>
+    const employeeApiUrl = 'http://localhost:8080/api/employees';
+    const departmentApiUrl = 'http://localhost:8080/api/departments';
+
+    function fetchDepartments() {
+        fetch(departmentApiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById('department-id');
+                select.innerHTML = '';
+                data.forEach(department => {
+                    const option = document.createElement('option');
+                    option.value = department.id;
+                    option.textContent = department.name;
+                    select.appendChild(option);
+                });
+            });
+    }
+
+    function fetchEmployees() {
+        fetch(employeeApiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const list = document.getElementById('employee-list');
+                list.innerHTML = '';
+                data.forEach(employee => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${employee.name} - ${employee.email}`;
+                    list.appendChild(listItem);
+                });
+            });
+    }
+
+    function addEmployee() {
+        const name = document.getElementById('employee-name').value;
+        const email = document.getElementById('employee-email').value;
+        const departmentId = document.getElementById('department-id').value;
+
+        fetch(employeeApiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, email, departmentId }),
+        })
+            .then(response => response.json())
+            .then(() => {
+                fetchEmployees();
+                document.getElementById('employee-form').reset();
+                document.getElementById('add-employee-form').style.display = 'none';
+            });
+    }
+
+    function showAddEmployeeForm() {
+        document.getElementById('add-employee-form').style.display = 'block';
+        fetchDepartments();
+    }
+
+    // Initial fetch
+    fetchEmployees();
+</script>
+</body>
+</html>

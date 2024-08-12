@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<h1>Projects</h1>
+
+<button onclick="showAddProjectForm()">Add Project</button>
+
+<div id="add-project-form" style="display:none;">
+    <h2>Add Project</h2>
+    <form id="project-form">
+        <label for="project-name">Name:</label>
+        <input type="text" id="project-name" name="name" required>
+        <label for="project-description">Description:</label>
+        <input type="text" id="project-description" name="description" required>
+        <label for="employee-id">Assign to Employee:</label>
+        <select id="employee-id" name="employeeId" required></select>
+        <button type="button" onclick="addProject()">Add</button>
+    </form>
+</div>
+
+<div id="edit-project-form" style="display:none;">
+    <h2>Edit Project</h2>
+    <form id="edit-project-form-content">
+        <input type="hidden" id="edit-project-id">
+        <label for="edit-project-name">Name:</label>
+        <input type="text" id="edit-project-name" name="name" required>
+        <label for="edit-project-description">Description:</label>
+        <input type="text" id="edit-project-description" name="description" required>
+        <label for="edit-employee-id">Assign to Employee:</label>
+        <select id="edit-employee-id" name="employeeId" required></select>
+        <button type="button" onclick="updateProject()">Update</button>
+    </form>
+</div>
+
+<h2>Project List</h2>
+<ul id="project-list"></ul>
+
+<script>
+    const projectApiUrl = 'http://localhost:8080/api/projects';
+    const employeeApiUrl = 'http://localhost:8080/api/employees';
+
+    function fetchEmployees() {
+        fetch(employeeApiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById('employee-id');
+                const editSelect = document.getElementById('edit-employee-id');
+                select.innerHTML = '';
+                editSelect.innerHTML = '';
+                data.forEach(employee => {
+                    const option = document.createElement('option');
+                    option.value = employee.id;
+                    option.textContent = employee.name;
+                    select.appendChild(option);
+                    editSelect.appendChild(option.cloneNode(true));
+                });
+            });
+    }
+
+    function fetchProjects() {
+        fetch(projectApiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const list = document.getElementById('project-list');
+                list.innerHTML = '';
+                data.forEach(project => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                        ${project.name || 'No name'} - ${project.description || 'No description'} (Assigned to: ${project.employee ? project.employee.name : 'Unassigned'})
+                        <button onclick="showEditProjectForm(${project.id})">Edit</button>
+                        <button onclick="deleteProject(${project.id})">Delete</button>
+                    `;
+                    list.appendChild(listItem);
+                });
+            });
+    }
+
+    function addProject() {
+        const name = document.getElementById('project-name').value;
+        const description = document.getElementById('project-description').value;
+        const employeeId = document.getElementById('employee-id').value;
+
+        fetch(projectApiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, description, employeeId }),
+        })
+            .then(response => response.json())
+            .then(() => {
+                fetchProjects();
+                document.getElementById('project-form').reset();
+                document.getElementById('add-project-form').style.display = 'none';
+            });
+    }
+
+    function updateProject() {
+        const id = document.getElementById('edit-project-id').value;
+        const name = document.getElementById('edit-project-name').value;
+        const description = document.getElementById('edit-project-description').value;
+        const employeeId = document.getElementById('edit-employee-id').value;
+
+        fetch(`${projectApiUrl}/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, description, employeeId }),
+        })
+            .then(response => response.json())
+            .then(() => {
+                fetchProjects();
+                document.getElementById('edit-project-form-content').reset();
+                document.getElementById('edit-project-form').style.display = 'none';
+            });
+    }
+
+    function deleteProject(id) {
+        fetch(`${projectApiUrl}/${id}`, {
+            method: 'DELETE',
+        })
+            .then(() => {
+                fetchProjects();
+            });
+    }
+
+    function showAddProjectForm() {
+        document.getElementById('add-project-form').style.display = 'block';
+        fetchEmployees();
+    }
+
+    function showEditProjectForm(id) {
+        fetch(`${projectApiUrl}/${id}`)
+            .then(response => response.json())
+            .then(project => {
+                document.getElementById('edit-project-id').value = project.id;
+                document.getElementById('edit-project-name').value = project.name || '';
+                document.getElementById('edit-project-description').value = project.description || '';
+
+                const editEmployeeSelect = document.getElementById('edit-employee-id');
+                Array.from(editEmployeeSelect.options).forEach(option => {
+                    option.selected = (option.value == project.employee?.id);
+                });
+
+                document.getElementById('edit-project-form').style.display = 'block';
+                document.getElementById('add-project-form').style.display = 'none';
+            });
+    }
+
+    // Initial fetch
+    fetchProjects();
+    fetchEmployees();
+</script>
+</body>
+</html>

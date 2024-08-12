@@ -3,7 +3,7 @@ package com.example.teamsync.model;
 import jakarta.persistence.*;
 
 @Entity
-public class Employee {
+public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,12 +11,13 @@ public class Employee {
 
     private String name;
 
-    private String email;
+    private String description;
 
     @ManyToOne
-    @JoinColumn(name = "department_id")
-    private Department department;
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -33,19 +34,19 @@ public class Employee {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getDescription() {
+        return description;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Department getDepartment() {
-        return department;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

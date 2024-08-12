@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Departments</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<h1>Departments</h1>
+
+<button onclick="showAddDepartmentForm()">Add Department</button>
+
+<div id="add-department-form" style="display:none;">
+    <h2>Add Department</h2>
+    <form id="department-form">
+        <label for="department-name">Name:</label>
+        <input type="text" id="department-name" name="name" required>
+        <button type="button" onclick="addDepartment()">Add</button>
+    </form>
+</div>
+
+<h2>Department List</h2>
+<ul id="department-list"></ul>
+
+<script>
+    const apiUrl = 'http://localhost:8080/api/departments';
+
+    function fetchDepartments() {
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const list = document.getElementById('department-list');
+                list.innerHTML = '';
+                data.forEach(department => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = department.name;
+                    list.appendChild(listItem);
+                });
+            });
+    }
+
+    function addDepartment() {
+        const name = document.getElementById('department-name').value;
+
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name }),
+        })
+            .then(response => response.json())
+            .then(() => {
+                fetchDepartments();
+                document.getElementById('department-form').reset();
+                document.getElementById('add-department-form').style.display = 'none';
+            });
+    }
+
+    function showAddDepartmentForm() {
+        document.getElementById('add-department-form').style.display = 'block';
+    }
+
+    // Initial fetch
+    fetchDepartments();
+</script>
+</body>
+</html>
