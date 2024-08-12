@@ -46,7 +46,7 @@ public class ProjectService {
             throw new RuntimeException("Project not found with id " + id);
         }
     }
-    
+
     public Project updateProject(Long id, ProjectDto projectDto) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Project not found"));

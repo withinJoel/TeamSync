@@ -55,6 +55,14 @@
                 data.forEach(employee => {
                     const listItem = document.createElement('li');
                     listItem.textContent = `${employee.name} - ${employee.email}`;
+
+                    // Create delete button
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.onclick = () => deleteEmployee(employee.id);
+
+                    // Append delete button to list item
+                    listItem.appendChild(deleteButton);
                     list.appendChild(listItem);
                 });
             });
@@ -83,6 +91,15 @@
     function showAddEmployeeForm() {
         document.getElementById('add-employee-form').style.display = 'block';
         fetchDepartments();
+    }
+
+    function deleteEmployee(id) {
+        fetch(`${employeeApiUrl}/${id}`, {
+            method: 'DELETE',
+        })
+            .then(() => {
+                fetchEmployees();
+            });
     }
 
     // Initial fetch
