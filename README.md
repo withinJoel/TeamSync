@@ -43,7 +43,7 @@ CREATE TABLE project (
   FOREIGN KEY (employee_id) REFERENCES employee(id)
 );
 ```
-* Update the application.properties
+* Update the `application.properties`
 ```
 spring.application.name=teamsync
 spring.datasource.url=jdbc:mysql://localhost:3306/teamsync  //replace teamsync with your database name.
