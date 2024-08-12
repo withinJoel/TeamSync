@@ -5,7 +5,7 @@ Made with 💖 by Joel Jolly.
 TeamSync is a comprehensive employee management and project tracking application designed to streamline the way you manage your workforce and projects. With TeamSync, you can effortlessly keep track of employee details, monitor the status of ongoing projects, and manage department information, all from a unified platform.
 
 # To get started
-* create a database
+* Create a database
 ```
 CREATE DATABASE teamsync;
 ```
@@ -21,6 +21,7 @@ CREATE TABLE department (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) NOT NULL
 );
+```
 
 * Create a table called `employee`
 ```
