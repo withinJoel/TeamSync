@@ -43,6 +43,19 @@ CREATE TABLE project (
   FOREIGN KEY (employee_id) REFERENCES employee(id)
 );
 ```
+* Update the application.properties
+```
+spring.application.name=teamsync
+spring.datasource.url=jdbc:mysql://localhost:3306/teamsync  //replace teamsync with your database name.
+spring.datasource.username=root  //mysql name
+spring.datasource.password=test123!  //mysql password
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+```
+* Paste the repo code inside the intellij project folder. (Before doing this create a new project using intellij and then close the intellij app and then paste the code from this repo)
+* Run the `build.gradle` (To install the packages)
+* Run the code.
+
 # Support Me
 If you love Elsa and want to keep me caffeinated for more awesome updates, consider buying me a coffee!
 
