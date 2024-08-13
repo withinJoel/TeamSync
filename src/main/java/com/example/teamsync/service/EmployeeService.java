@@ -23,7 +23,14 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
+    // Delete an employee by ID
     public void deleteEmployee(Long id) {
-        employeeRepository.deleteById(id);
+        try {
+            employeeRepository.deleteById(id);
+        } catch (Exception e) {
+            // Log the exception
+            e.printStackTrace();
+            throw new RuntimeException("Error deleting employee with ID " + id);
+        }
     }
 }
