@@ -28,7 +28,7 @@ TeamSync is a comprehensive employee management and project tracking application
 16. Deploy the Application: ❌ (Tried, but failed multiple times) (Working on it)
 17. Code Review and Feedback: Pending
 
-# Demo Screenshots
+# Screenshots
 * Index page
 ![Screenshot from 2024-08-13 16-15-50](https://github.com/user-attachments/assets/184e26a5-ede0-4c51-bfe9-63a578a64f54)
 
