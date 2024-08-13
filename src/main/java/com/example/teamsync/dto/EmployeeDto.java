@@ -1,24 +1,18 @@
-package com.example.teamsync.model;
+package com.example.teamsync.dto;
 
-import jakarta.persistence.*;
-
-@Entity
-public class Employee {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Added to auto-generate IDs
-    private Long id;
+public class EmployeeDto {
+    private int id;
     private String name;
     private String email;
     private String department;
 
     // Getters and Setters
-    public Long getId() {
-        return id; // Return Long
+    public int getId(){
+        return id;
     }
 
-    public void setId(Long id) {
-        this.id = id; // Accept Long
+    public void setId(int id){
+        this.id = id;
     }
 
     public String getName() {

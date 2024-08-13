@@ -1,7 +1,6 @@
-// DepartmentController.java
 package com.example.teamsync.controller;
 
-import com.example.teamsync.model.Department;
+import com.example.teamsync.dto.DepartmentDto;
 import com.example.teamsync.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,25 +16,25 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @GetMapping
-    public List<Department> getAllDepartments() {
+    public List<DepartmentDto> getAllDepartments() {
         return departmentService.getAllDepartments();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Department> getDepartmentById(@PathVariable Long id) {
+    public ResponseEntity<DepartmentDto> getDepartmentById(@PathVariable Long id) {
         return departmentService.getDepartmentById(id)
-                .map(ResponseEntity::ok)
+                .map(department -> ResponseEntity.ok(departmentService.convertToDto(department)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Department createDepartment(@RequestBody Department department) {
-        return departmentService.createDepartment(department);
+    public DepartmentDto createDepartment(@RequestBody DepartmentDto departmentDto) {
+        return departmentService.createDepartment(departmentDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Department> updateDepartment(@PathVariable Long id, @RequestBody Department departmentDetails) {
-        return ResponseEntity.ok(departmentService.updateDepartment(id, departmentDetails));
+    public ResponseEntity<DepartmentDto> updateDepartment(@PathVariable Long id, @RequestBody DepartmentDto departmentDto) {
+        return ResponseEntity.ok(departmentService.updateDepartment(id, departmentDto));
     }
 
     @DeleteMapping("/{id}")
