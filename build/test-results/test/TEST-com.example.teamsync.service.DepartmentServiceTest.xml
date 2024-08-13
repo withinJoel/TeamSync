@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.teamsync.service.DepartmentServiceTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2024-08-13T06:06:46" hostname="sysadmin-OptiPlex-3020" time="0.266">
+  <properties/>
+  <testcase name="testDeleteDepartment()" classname="com.example.teamsync.service.DepartmentServiceTest" time="0.23"/>
+  <testcase name="testUpdateDepartment()" classname="com.example.teamsync.service.DepartmentServiceTest" time="0.011"/>
+  <testcase name="testUpdateDepartmentNotFound()" classname="com.example.teamsync.service.DepartmentServiceTest" time="0.005"/>
+  <testcase name="testGetDepartmentById()" classname="com.example.teamsync.service.DepartmentServiceTest" time="0.004"/>
+  <testcase name="testGetAllDepartments()" classname="com.example.teamsync.service.DepartmentServiceTest" time="0.005"/>
+  <testcase name="testCreateDepartment()" classname="com.example.teamsync.service.DepartmentServiceTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

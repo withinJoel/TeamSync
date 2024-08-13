@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.example.teamsync.service.ProjectServiceTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2024-08-12T11:22:37" hostname="sysadmin-OptiPlex-3020" time="1.06">
+<testsuite name="com.example.teamsync.service.ProjectServiceTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2024-08-13T06:06:47" hostname="sysadmin-OptiPlex-3020" time="0.141">
   <properties/>
-  <testcase name="testUpdateProjectNotFound()" classname="com.example.teamsync.service.ProjectServiceTest" time="0.996"/>
-  <testcase name="testAddProjectEmployeeNotFound()" classname="com.example.teamsync.service.ProjectServiceTest" time="0.007"/>
-  <testcase name="testUpdateProject()" classname="com.example.teamsync.service.ProjectServiceTest" time="0.008"/>
-  <testcase name="testAddProject()" classname="com.example.teamsync.service.ProjectServiceTest" time="0.006"/>
-  <testcase name="testDeleteProject()" classname="com.example.teamsync.service.ProjectServiceTest" time="0.006"/>
-  <testcase name="testGetProjectById()" classname="com.example.teamsync.service.ProjectServiceTest" time="0.005"/>
-  <testcase name="testGetAllProjects()" classname="com.example.teamsync.service.ProjectServiceTest" time="0.005"/>
-  <testcase name="testGetProjectByIdNotFound()" classname="com.example.teamsync.service.ProjectServiceTest" time="0.006"/>
+  <testcase name="testUpdateProjectNotFound()" classname="com.example.teamsync.service.ProjectServiceTest" time="0.071"/>
+  <testcase name="testAddProjectEmployeeNotFound()" classname="com.example.teamsync.service.ProjectServiceTest" time="0.005"/>
+  <testcase name="testUpdateProject()" classname="com.example.teamsync.service.ProjectServiceTest" time="0.005"/>
+  <testcase name="testAddProject()" classname="com.example.teamsync.service.ProjectServiceTest" time="0.011"/>
+  <testcase name="testDeleteProject()" classname="com.example.teamsync.service.ProjectServiceTest" time="0.003"/>
+  <testcase name="testGetProjectById()" classname="com.example.teamsync.service.ProjectServiceTest" time="0.003"/>
+  <testcase name="testGetAllProjects()" classname="com.example.teamsync.service.ProjectServiceTest" time="0.003"/>
+  <testcase name="testGetProjectByIdNotFound()" classname="com.example.teamsync.service.ProjectServiceTest" time="0.003"/>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (/home/user1/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.14.18/417558ea01fe9f0e8a94af28b9469d281c4e3984/byte-buddy-agent-1.14.18.jar)
-WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
-WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
-WARNING: Dynamic loading of agents will be disallowed by default in a future release
-]]></system-err>
+  <system-err><![CDATA[]]></system-err>
 </testsuite>
