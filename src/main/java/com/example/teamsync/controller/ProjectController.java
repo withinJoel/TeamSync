@@ -45,5 +45,4 @@ public class ProjectController {
         Project project = projectService.getProjectById(id);
         return ResponseEntity.ok(project);
     }
-
 }
