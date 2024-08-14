@@ -25,7 +25,7 @@ TeamSync is a comprehensive employee management and project tracking application
 16. Implement Basic Security (Optional): ✅
   * (Secured in the HTML level)
 15. Prepare Documentation: ✅ (Almost)
-16. Deploy the Application: ❌ (Tried, but failed multiple times) (Working on it)
+16. Deploy the Application: ❌ (Tried, but had issues deploying it) (Working on it)
 17. Code Review and Feedback: Pending
 
 # Screenshots
