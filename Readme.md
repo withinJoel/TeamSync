@@ -102,12 +102,13 @@ spring.jpa.show-sql=true
 # Testing using Postman
 * First create an account in the postman site (link <a href="https://www.postman.com/">https://www.postman.com/</a>
 * Install the Postman cli or an Postman desktop app.
-![Screenshot from 2024-08-14 13-15-02](https://github.com/user-attachments/assets/05300a59-bdaf-4b49-9db5-cad85705cb02)
 
+![Screenshot from 2024-08-14 13-17-08](https://github.com/user-attachments/assets/94f1f65e-e2f6-41a9-a1e7-1600d50d991c)
 
 * Then run the cli or the app.
 * In the browser go to the website and click on `New Request`
-![Screenshot from 2024-08-14 13-17-08](https://github.com/user-attachments/assets/94f1f65e-e2f6-41a9-a1e7-1600d50d991c)
+
+![Screenshot from 2024-08-14 13-15-02](https://github.com/user-attachments/assets/05300a59-bdaf-4b49-9db5-cad85705cb02)
 
 # Want help use my Java & Springboot basics course (It's free)
 * https://github.com/withinJoel/LearnJava
