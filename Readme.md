@@ -100,7 +100,7 @@ spring.jpa.show-sql=true
 * There are testing code that is present in the `Test` folder.
 
 # Testing using Postman
-* First create an account in the postman site (link <a href="https://www.postman.com/">https://www.postman.com/</a>
+* First create an account in the postman site (link <a href="https://www.postman.com/">https://www.postman.com/</a>)
 * Install the Postman cli or an Postman desktop app. (If you are an Linux user type `sudo snap install postman`
 ![Screenshot from 2024-08-14 13-17-08](https://github.com/user-attachments/assets/94f1f65e-e2f6-41a9-a1e7-1600d50d991c)
 * Then run the cli or the app.
