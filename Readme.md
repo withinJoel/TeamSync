@@ -11,10 +11,10 @@ TeamSync is a comprehensive employee management and project tracking application
    * MySql ✅
 3. Create a New Spring Boot Project: ✅ 
 4. Set Up Version Control: ✅
-   * Github ✅
-6. Design the Database Schema: ✅ 
+   * Github ✅ (Files are uploaded via GitKraken (For linux users) (Github Desktop for windows users)) (Note: If your individual files are less than 25 mb you can use github website on your browser for file uploading)
+6. Design the Database Schema: ✅  (Mentioned in the later part of this readme)
 7. Configure MySQL Connection: ✅ 
-8. Create JPA Entities: ✅ 
+8. Create JPA Entities: ✅
 9. Create Repository Interfaces: ✅ 
 10. Implement the Service Layer: ✅ 
 11. Create REST Controllers: ✅ 
