@@ -30,18 +30,23 @@ TeamSync is a comprehensive employee management and project tracking application
 
 # Screenshots
 * Index page
+
 ![Screenshot from 2024-08-13 16-15-50](https://github.com/user-attachments/assets/184e26a5-ede0-4c51-bfe9-63a578a64f54)
 
 * Employees page
+
 ![Screenshot from 2024-08-13 16-16-20](https://github.com/user-attachments/assets/bf514576-89d7-496c-88a7-85f8f9c73141)
 
 * Department page
+
 ![Screenshot from 2024-08-13 16-16-27](https://github.com/user-attachments/assets/1a7e38b2-d3ec-458b-a32f-4e520b617f5c)
 
 * Project page
+
 ![Screenshot from 2024-08-13 16-16-33](https://github.com/user-attachments/assets/7d68f10b-aabf-4f47-8e50-1cf9a06dc67e)
 
 * About page
+
 ![Screenshot from 2024-08-14 12-52-47](https://github.com/user-attachments/assets/ffabbb7e-234a-47d5-89e3-32ce571c6d1d)
 
 # To get started
@@ -102,6 +107,7 @@ spring.jpa.show-sql=true
 # Testing using Postman
 * First create an account in the postman site (link <a href="https://www.postman.com/">https://www.postman.com/</a>)
 * Install the Postman cli or an Postman desktop app. (If you are an Linux user type `sudo snap install postman`
+
 ![Screenshot from 2024-08-14 13-17-08](https://github.com/user-attachments/assets/94f1f65e-e2f6-41a9-a1e7-1600d50d991c)
 * Then run the cli or the app.
 * In the browser go to the website (<a href="https://www.postman.com/">https://www.postman.com/</a>) and click on `New Request` (If you are using cli)(if not use the installed application)
@@ -109,6 +115,7 @@ spring.jpa.show-sql=true
 ![Screenshot from 2024-08-14 13-15-02](https://github.com/user-attachments/assets/05300a59-bdaf-4b49-9db5-cad85705cb02)
 
 * Example:
+
 ![image](https://github.com/user-attachments/assets/b7c63af5-5643-42b8-b9a2-a6caffc4a127)
 
 # Want help use my Java & Springboot basics course (It's free)
