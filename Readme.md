@@ -93,6 +93,9 @@ spring.jpa.show-sql=true
 * Run the `build.gradle` (To install the packages)
 * Run the code.
 
+# Want help use my Java & Springboot basics course (It's free)
+* https://github.com/withinJoel/LearnJava
+
 # Support Me
 If you love TeamSync and want to keep me caffeinated for more awesome updates, consider buying me a coffee!
 
