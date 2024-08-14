@@ -41,6 +41,9 @@ TeamSync is a comprehensive employee management and project tracking application
 * Project page
 ![Screenshot from 2024-08-13 16-16-33](https://github.com/user-attachments/assets/7d68f10b-aabf-4f47-8e50-1cf9a06dc67e)
 
+* About page
+![Screenshot from 2024-08-14 12-52-47](https://github.com/user-attachments/assets/ffabbb7e-234a-47d5-89e3-32ce571c6d1d)
+
 # To get started
 * Create a database
 ```
