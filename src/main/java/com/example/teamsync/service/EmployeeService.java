@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -18,6 +19,12 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
+    // Retrieve an employee by ID
+    public Employee getEmployeeById(Long id) {
+        Optional<Employee> employee = employeeRepository.findById(id);
+        return employee.orElseThrow(() -> new RuntimeException("Employee not found with ID " + id));
+    }
+
     // Create a new employee
     public Employee createEmployee(Employee employee) {
         return employeeRepository.save(employee);
@@ -28,7 +35,6 @@ public class EmployeeService {
         try {
             employeeRepository.deleteById(id);
         } catch (Exception e) {
-            // Log the exception
             e.printStackTrace();
             throw new RuntimeException("Error deleting employee with ID " + id);
         }

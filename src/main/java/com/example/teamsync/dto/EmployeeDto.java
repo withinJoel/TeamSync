@@ -1,17 +1,19 @@
 package com.example.teamsync.dto;
 
-public class EmployeeDto {
+import org.springframework.hateoas.RepresentationModel;
+
+public class EmployeeDto extends RepresentationModel<EmployeeDto> {
     private int id;
     private String name;
     private String email;
     private String department;
 
-    // Getters and Setters
-    public int getId(){
+    // Getters and setters
+    public int getId() {
         return id;
     }
 
-    public void setId(int id){
+    public void setId(int id) {
         this.id = id;
     }
 

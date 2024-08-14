@@ -1,5 +1,6 @@
 package com.example.teamsync.controller;
 
+import com.example.teamsync.assembler.EmployeeResourceAssembler;
 import com.example.teamsync.dto.EmployeeDto;
 import com.example.teamsync.model.Employee;
 import com.example.teamsync.service.EmployeeService;
@@ -18,44 +19,37 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private EmployeeResourceAssembler assembler;
+
     // List all employees using EmployeeDto
     @GetMapping
-    public List<EmployeeDto> getAllEmployees() {
-        // Fetch all employees
+    public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
         List<Employee> employees = employeeService.getAllEmployees();
-
-        // Convert Employee entities to EmployeeDto
-        return employees.stream()
-                .map(employee -> {
-                    EmployeeDto dto = new EmployeeDto();
-                    dto.setId(employee.getId().intValue()); // Convert Long to int
-                    dto.setName(employee.getName());
-                    dto.setEmail(employee.getEmail());
-                    dto.setDepartment(employee.getDepartment());
-                    return dto;
-                })
+        List<EmployeeDto> employeeDtos = employees.stream()
+                .map(assembler::toModel)
                 .collect(Collectors.toList());
+
+        return ResponseEntity.ok(employeeDtos);
+    }
+
+    // Get an employee by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable Long id) {
+        Employee employee = employeeService.getEmployeeById(id);
+        return ResponseEntity.ok(assembler.toModel(employee));
     }
 
     // Create a new employee using Employee entity
     @PostMapping
     public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto) {
-        // Convert EmployeeDto to Employee entity
         Employee employee = new Employee();
         employee.setName(employeeDto.getName());
         employee.setEmail(employeeDto.getEmail());
         employee.setDepartment(employeeDto.getDepartment());
 
-        // Create the employee and convert it back to EmployeeDto
         Employee savedEmployee = employeeService.createEmployee(employee);
-
-        EmployeeDto savedEmployeeDto = new EmployeeDto();
-        savedEmployeeDto.setId(savedEmployee.getId().intValue());
-        savedEmployeeDto.setName(savedEmployee.getName());
-        savedEmployeeDto.setEmail(savedEmployee.getEmail());
-        savedEmployeeDto.setDepartment(savedEmployee.getDepartment());
-
-        return ResponseEntity.ok(savedEmployeeDto);
+        return ResponseEntity.ok(assembler.toModel(savedEmployee));
     }
 
     // Delete an employee by ID using Employee entity
@@ -65,7 +59,6 @@ public class EmployeeController {
             employeeService.deleteEmployee(id);
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An error occurred while deleting employee with ID " + id);
         }

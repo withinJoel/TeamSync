@@ -1,5 +1,6 @@
 package com.example.teamsync.service;
 
+import com.example.teamsync.dto.DepartmentDto;
 import com.example.teamsync.model.Department;
 import com.example.teamsync.repository.DepartmentRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +37,7 @@ public class DepartmentServiceTest {
         department.setName("HR");
         when(departmentRepository.findAll()).thenReturn(Collections.singletonList(department));
 
-        List<Department> departments = departmentService.getAllDepartments();
+        List<DepartmentDto> departments = departmentService.getAllDepartments();
         assertEquals(1, departments.size());
         assertEquals("HR", departments.get(0).getName());
         verify(departmentRepository, times(1)).findAll();
