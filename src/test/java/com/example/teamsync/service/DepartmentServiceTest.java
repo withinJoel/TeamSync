@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Collections;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -56,26 +55,29 @@ public class DepartmentServiceTest {
 
     @Test
     public void testCreateDepartment() {
+        DepartmentDto departmentDto = new DepartmentDto();
+        departmentDto.setName("Finance");
         Department department = new Department();
         department.setName("Finance");
-        when(departmentRepository.save(department)).thenReturn(department);
+        when(departmentRepository.save(any(Department.class))).thenReturn(department);
 
-        Department result = departmentService.createDepartment(department);
+        DepartmentDto result = departmentService.createDepartment(departmentDto);
         assertEquals("Finance", result.getName());
-        verify(departmentRepository, times(1)).save(department);
+        verify(departmentRepository, times(1)).save(any(Department.class));
     }
 
     @Test
     public void testUpdateDepartment() {
         Department existingDepartment = new Department();
         existingDepartment.setName("Marketing");
-        Department updatedDepartment = new Department();
-        updatedDepartment.setName("Sales");
+
+        DepartmentDto updatedDepartmentDto = new DepartmentDto();
+        updatedDepartmentDto.setName("Sales");
 
         when(departmentRepository.findById(1L)).thenReturn(Optional.of(existingDepartment));
         when(departmentRepository.save(existingDepartment)).thenReturn(existingDepartment);
 
-        Department result = departmentService.updateDepartment(1L, updatedDepartment);
+        DepartmentDto result = departmentService.updateDepartment(1L, updatedDepartmentDto);
         assertEquals("Sales", result.getName());
         verify(departmentRepository, times(1)).findById(1L);
         verify(departmentRepository, times(1)).save(existingDepartment);
@@ -83,13 +85,13 @@ public class DepartmentServiceTest {
 
     @Test
     public void testUpdateDepartmentNotFound() {
-        Department department = new Department();
-        department.setName("Logistics");
+        DepartmentDto departmentDto = new DepartmentDto();
+        departmentDto.setName("Logistics");
 
         when(departmentRepository.findById(1L)).thenReturn(Optional.empty());
 
         RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
-            departmentService.updateDepartment(1L, department);
+            departmentService.updateDepartment(1L, departmentDto);
         });
         assertEquals("Department not found with id 1", thrown.getMessage());
         verify(departmentRepository, times(1)).findById(1L);

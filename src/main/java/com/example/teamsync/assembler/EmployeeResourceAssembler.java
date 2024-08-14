@@ -3,6 +3,7 @@ package com.example.teamsync.assembler;
 import com.example.teamsync.controller.EmployeeController;
 import com.example.teamsync.dto.EmployeeDto;
 import com.example.teamsync.model.Employee;
+import org.springframework.beans.BeanUtils;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
@@ -18,11 +19,9 @@ public class EmployeeResourceAssembler extends RepresentationModelAssemblerSuppo
 
     @Override
     public EmployeeDto toModel(Employee employee) {
+        // Automatically copy properties from Employee to EmployeeDto
         EmployeeDto dto = new EmployeeDto();
-        dto.setId(employee.getId().intValue());
-        dto.setName(employee.getName());
-        dto.setEmail(employee.getEmail());
-        dto.setDepartment(employee.getDepartment());
+        BeanUtils.copyProperties(employee, dto);
 
         // Add self link to the DTO
         dto.add(linkTo(methodOn(EmployeeController.class).getEmployeeById(employee.getId())).withSelfRel());

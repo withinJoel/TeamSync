@@ -185,11 +185,13 @@
         fetch(employeeApiUrl)
             .then(response => response.json())
             .then(data => {
+                console.log('Fetched data:', data); // Log the fetched data
                 const select = document.getElementById('employee-id');
                 const editSelect = document.getElementById('edit-employee-id');
                 select.innerHTML = '';
                 editSelect.innerHTML = '';
                 data.forEach(employee => {
+                    console.log('Employee:', employee); // Log each employee
                     const option = document.createElement('option');
                     option.value = employee.id;
                     option.textContent = employee.name;
@@ -198,8 +200,10 @@
                 });
                 M.FormSelect.init(select); // Initialize Materialize select component
                 M.FormSelect.init(editSelect); // Initialize Materialize select component
-            });
+            })
+            .catch(error => console.error('Error fetching employees:', error));
     }
+
 
     function fetchProjects() {
         fetch(projectApiUrl)
