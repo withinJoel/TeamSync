@@ -176,21 +176,46 @@
     }
 
     function fetchEmployees() {
-
         fetch(employeeApiUrl)
             .then(response => response.json())
             .then(data => {
                 const list = document.getElementById('employee-list');
-                list.innerHTML = '';
+                list.innerHTML = ''; // Clear existing content
+
+                // Create the table and table header
+                const table = document.createElement('table');
+                table.className = 'striped';
+
+                const thead = document.createElement('thead');
+                thead.innerHTML = `
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Age</th>
+                    <th>Actions</th>
+                </tr>
+            `;
+                table.appendChild(thead);
+
+                const tbody = document.createElement('tbody');
+
                 data.forEach(employee => {
-                    const listItem = document.createElement('li');
-                    listItem.className = 'collection-item';
-                    listItem.innerHTML = `
-                        ${employee.name} - ${employee.email} - ${employee.age}
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                    <td>${employee.name}</td>
+                    <td>${employee.email}</td>
+                    <td>${employee.department}</td>
+                    <td>${employee.age}</td>
+                    <td>
                         <button class="btn-delete" onclick="deleteEmployee(${employee.id})">Delete</button>
-                    `;
-                    list.appendChild(listItem);
+                    </td>
+                `;
+                    tbody.appendChild(row);
                 });
+
+                table.appendChild(tbody);
+                list.appendChild(table); // Append the table to the list element
             });
     }
 

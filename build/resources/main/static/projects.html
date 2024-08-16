@@ -197,17 +197,41 @@
             .then(response => response.json())
             .then(data => {
                 const list = document.getElementById('project-list');
-                list.innerHTML = '';
+                list.innerHTML = ''; // Clear existing content
+
+                // Create the table and table header
+                const table = document.createElement('table');
+                table.className = 'striped';
+
+                const thead = document.createElement('thead');
+                thead.innerHTML = `
+                <tr>
+                    <th>Project Name</th>
+                    <th>Description</th>
+                    <th>Assigned Employee</th>
+                    <th>Actions</th>
+                </tr>
+            `;
+                table.appendChild(thead);
+
+                const tbody = document.createElement('tbody');
+
                 data.forEach(project => {
-                    const listItem = document.createElement('li');
-                    listItem.className = 'collection-item';
-                    listItem.innerHTML = `
-                        ${project.name || 'No name'} - ${project.description || 'No description'} (Assigned to: ${project.employee ? project.employee.name : 'Unassigned'})
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                    <td>${project.name || 'No name'}</td>
+                    <td>${project.description || 'No description'}</td>
+                    <td>${project.employee ? project.employee.name : 'Unassigned'}</td>
+                    <td>
                         <button class="btn-edit" onclick="showEditProjectForm(${project.id})">Edit</button>
                         <button class="btn-delete" onclick="deleteProject(${project.id})">Delete</button>
-                    `;
-                    list.appendChild(listItem);
+                    </td>
+                `;
+                    tbody.appendChild(row);
                 });
+
+                table.appendChild(tbody);
+                list.appendChild(table); // Append the table to the list element
             });
     }
 
