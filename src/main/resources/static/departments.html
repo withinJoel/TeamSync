@@ -133,13 +133,32 @@
             .then(response => response.json())
             .then(data => {
                 const list = document.getElementById('department-list');
-                list.innerHTML = '';
+                list.innerHTML = ''; // Clear existing content
+
+                // Create the table and table header
+                const table = document.createElement('table');
+                table.className = 'striped';
+
+                const thead = document.createElement('thead');
+                thead.innerHTML = `
+                <tr>
+                    <th>Department Name</th>
+                </tr>
+            `;
+                table.appendChild(thead);
+
+                const tbody = document.createElement('tbody');
+
                 data.forEach(department => {
-                    const listItem = document.createElement('li');
-                    listItem.className = 'collection-item';
-                    listItem.textContent = department.name;
-                    list.appendChild(listItem);
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                    <td>${department.name}</td>
+                `;
+                    tbody.appendChild(row);
                 });
+
+                table.appendChild(tbody);
+                list.appendChild(table); // Append the table to the list element
             });
     }
 
