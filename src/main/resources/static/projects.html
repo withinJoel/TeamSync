@@ -38,20 +38,22 @@
             font-size: 16px;
             font-weight: 500;
             transition: background-color 0.3s, transform 0.2s;
+            margin-bottom: 20px;
         }
         .btn-primary:hover {
             background-color: #1558d6;
         }
-        .btn-edit {
-            position: absolute;
-            background-color: #1a73e8;
-            color: #ffffff;
+        .btn-edit, .btn-delete {
             border-radius: 20px;
             padding: 8px 16px;
-            margin-left: 950px;
-            font-size: 16px;
-            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
             transition: background-color 0.3s, transform 0.2s;
+            margin-left: 10px;
+        }
+        .btn-edit {
+            background-color: #1a73e8;
+            color: #ffffff;
         }
         .btn-edit:hover {
             background-color: #1558d6;
@@ -60,11 +62,6 @@
             background-color: #e57373;
             color: #ffffff;
             border: none;
-            border-radius: 20px;
-            padding: 8px 16px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
         }
         .btn-delete:hover {
             background-color: #d32f2f;
@@ -109,6 +106,14 @@
             font-weight: 500;
             transition: background-color 0.3s, color 0.3s;
         }
+        .input-field {
+            margin-bottom: 20px; /* Add margin to the bottom for spacing */
+        }
+
+        #min-age-field {
+            margin-top: 10px; /* Add some margin to create space below the checkbox */
+        }
+
     </style>
 </head>
 <body>
@@ -127,7 +132,7 @@
 <div class="container">
     <h1 style="font-weight: bolder;">Projects</h1>
 
-    <button class="btn-primary" onclick="showAddProjectForm()">Add Project</button>
+    <button class="btn-primary" onclick="toggleAddProjectForm()">Add Project</button>
 
     <div id="add-project-form" class="card" style="display:none;">
         <div class="card-content">
@@ -145,29 +150,17 @@
                     <select id="employee-id" name="employeeId" required></select>
                     <label for="employee-id">Assign to Employee</label>
                 </div>
+                <div style="padding-bottom: 30px;" class="input-field">
+                    <label>
+                        <input type="checkbox" id="age-requirement" onclick="toggleMinAgeInput()">
+                        <span>Is there a minimum age requirement?</span>
+                    </label>
+                </div>
+                <div class="input-field" id="min-age-field" style="display:none;">
+                    <input type="number" id="min-age" name="minAge" min="0">
+                    <label for="min-age">Minimum Age</label>
+                </div>
                 <button type="button" class="btn-primary" onclick="addProject()">Add</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="edit-project-form" class="card" style="display:none;">
-        <div class="card-content">
-            <h2 class="card-title">Edit Project</h2>
-            <form id="edit-project-form-content">
-                <input type="hidden" id="edit-project-id">
-                <div class="input-field">
-                    <input type="text" id="edit-project-name" name="name" required>
-                    <label for="edit-project-name">Name</label>
-                </div>
-                <div class="input-field">
-                    <input type="text" id="edit-project-description" name="description" required>
-                    <label for="edit-project-description">Description</label>
-                </div>
-                <div class="input-field">
-                    <select id="edit-employee-id" name="employeeId" required></select>
-                    <label for="edit-employee-id">Assign to Employee</label>
-                </div>
-                <button type="button" class="btn-primary" onclick="updateProject()">Update</button>
             </form>
         </div>
     </div>
@@ -185,25 +178,19 @@
         fetch(employeeApiUrl)
             .then(response => response.json())
             .then(data => {
-                console.log('Fetched data:', data); // Log the fetched data
                 const select = document.getElementById('employee-id');
-                const editSelect = document.getElementById('edit-employee-id');
                 select.innerHTML = '';
-                editSelect.innerHTML = '';
                 data.forEach(employee => {
-                    console.log('Employee:', employee); // Log each employee
                     const option = document.createElement('option');
                     option.value = employee.id;
                     option.textContent = employee.name;
+                    option.dataset.age = employee.age; // Store age in dataset
                     select.appendChild(option);
-                    editSelect.appendChild(option.cloneNode(true));
                 });
                 M.FormSelect.init(select); // Initialize Materialize select component
-                M.FormSelect.init(editSelect); // Initialize Materialize select component
             })
             .catch(error => console.error('Error fetching employees:', error));
     }
-
 
     function fetchProjects() {
         fetch(projectApiUrl)
@@ -215,92 +202,77 @@
                     const listItem = document.createElement('li');
                     listItem.className = 'collection-item';
                     listItem.innerHTML = `
-                            ${project.name || 'No name'} - ${project.description || 'No description'} (Assigned to: ${project.employee ? project.employee.name : 'Unassigned'})
-                            <button class="btn-edit" onclick="showEditProjectForm(${project.id})">Edit</button>
-                            <button class="btn-delete" onclick="deleteProject(${project.id})">Delete</button>
-                        `;
+                        ${project.name || 'No name'} - ${project.description || 'No description'} (Assigned to: ${project.employee ? project.employee.name : 'Unassigned'})
+                        <button class="btn-edit" onclick="showEditProjectForm(${project.id})">Edit</button>
+                        <button class="btn-delete" onclick="deleteProject(${project.id})">Delete</button>
+                    `;
                     list.appendChild(listItem);
                 });
             });
+    }
+
+    function toggleMinAgeInput() {
+        const minAgeField = document.getElementById('min-age-field');
+        minAgeField.style.display = document.getElementById('age-requirement').checked ? 'block' : 'none';
     }
 
     function addProject() {
         const name = document.getElementById('project-name').value;
         const description = document.getElementById('project-description').value;
         const employeeId = document.getElementById('employee-id').value;
+        const minAge = document.getElementById('min-age').value;
+
+        const selectedEmployee = document.querySelector(`#employee-id option[value="${employeeId}"]`);
+        const employeeAge = selectedEmployee ? selectedEmployee.dataset.age : null;
+
+        if (minAge && employeeAge && employeeAge < minAge) {
+            alert(`The assigned employee does not meet the minimum age requirement of ${minAge}.`);
+            return;
+        }
 
         fetch(projectApiUrl, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name, description, employeeId }),
+            body: JSON.stringify({ name, description, employeeId })
         })
-            .then(response => response.json())
-            .then(() => {
-                fetchProjects();
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to add project');
+                }
                 document.getElementById('project-form').reset();
-                document.getElementById('add-project-form').style.display = 'none';
-            });
+                toggleAddProjectForm();
+                fetchProjects();
+            })
+            .catch(error => console.error('Error adding project:', error));
     }
 
-    function updateProject() {
-        const id = document.getElementById('edit-project-id').value;
-        const name = document.getElementById('edit-project-name').value;
-        const description = document.getElementById('edit-project-description').value;
-        const employeeId = document.getElementById('edit-employee-id').value;
-
-        fetch(`${projectApiUrl}/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, description, employeeId }),
-        })
-            .then(response => response.json())
-            .then(() => {
-                fetchProjects();
-                document.getElementById('edit-project-form-content').reset();
-                document.getElementById('edit-project-form').style.display = 'none';
-            });
+    function toggleAddProjectForm() {
+        const form = document.getElementById('add-project-form');
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
     }
 
     function deleteProject(id) {
+        if (!confirm('Are you sure you want to delete this project?')) return;
+
         fetch(`${projectApiUrl}/${id}`, {
-            method: 'DELETE',
+            method: 'DELETE'
         })
-            .then(() => {
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to delete project');
+                }
                 fetchProjects();
-            });
+            })
+            .catch(error => console.error('Error deleting project:', error));
     }
 
-    function showAddProjectForm() {
-        document.getElementById('add-project-form').style.display = 'block';
+    document.addEventListener('DOMContentLoaded', () => {
         fetchEmployees();
-    }
-
-    function showEditProjectForm(id) {
-        fetch(`${projectApiUrl}/${id}`)
-            .then(response => response.json())
-            .then(project => {
-                document.getElementById('edit-project-id').value = project.id;
-                document.getElementById('edit-project-name').value = project.name || '';
-                document.getElementById('edit-project-description').value = project.description || '';
-
-                const editEmployeeSelect = document.getElementById('edit-employee-id');
-                Array.from(editEmployeeSelect.options).forEach(option => {
-                    option.selected = (option.value == project.employee?.id);
-                });
-                M.FormSelect.init(editEmployeeSelect); // Initialize Materialize select component
-
-                document.getElementById('edit-project-form').style.display = 'block';
-                document.getElementById('add-project-form').style.display = 'none';
-            });
-    }
-
-    // Initial fetch
-    fetchProjects();
-    fetchEmployees();
+        fetchProjects();
+        M.AutoInit(); // Initialize all Materialize components
+    });
 </script>
 </body>
 </html>
