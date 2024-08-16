@@ -30,7 +30,7 @@
             border-radius: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .btn-primary {
+        .btn-primary-action {
             background-color: #1a73e8;
             color: #ffffff;
             border-radius: 20px;
@@ -40,7 +40,20 @@
             transition: background-color 0.3s, transform 0.2s;
             margin-bottom: 20px;
         }
-        .btn-primary:hover {
+        .btn-primary-action:hover {
+            background-color: #1558d6;
+        }
+        .btn-secondary-action {
+            background-color: #1a73e8;
+            color: #ffffff;
+            border-radius: 20px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-bottom: 20px;
+        }
+        .btn-secondary-action:hover {
             background-color: #1558d6;
         }
         .btn-edit, .btn-delete {
@@ -113,7 +126,6 @@
         #min-age-field {
             margin-top: 10px; /* Add some margin to create space below the checkbox */
         }
-
     </style>
 </head>
 <body>
@@ -132,7 +144,7 @@
 <div class="container">
     <h1 style="font-weight: bolder;">Projects</h1>
 
-    <button class="btn-primary" onclick="toggleAddProjectForm()">Add Project</button>
+    <button class="btn-primary-action" onclick="toggleAddProjectForm()">Add Project</button>
 
     <div id="add-project-form" class="card" style="display:none;">
         <div class="card-content">
@@ -160,7 +172,7 @@
                     <input type="number" id="min-age" name="minAge" min="0">
                     <label for="min-age">Minimum Age</label>
                 </div>
-                <button type="button" class="btn-primary" onclick="addProject()">Add</button>
+                <button type="button" class="btn-secondary-action" onclick="addProject()">Add</button>
             </form>
         </div>
     </div>
@@ -229,18 +241,69 @@
                 `;
                     tbody.appendChild(row);
                 });
-
                 table.appendChild(tbody);
-                list.appendChild(table); // Append the table to the list element
-            });
+                list.appendChild(table);
+            })
+            .catch(error => console.error('Error fetching projects:', error));
+    }
+
+    function toggleAddProjectForm() {
+        const form = document.getElementById('add-project-form');
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        document.getElementById('project-form').reset();
+        document.querySelector('.btn-primary-action').textContent = 'Add';
+        document.querySelector('.btn-primary-action').setAttribute('onclick', 'addProject()');
     }
 
     function toggleMinAgeInput() {
         const minAgeField = document.getElementById('min-age-field');
-        minAgeField.style.display = document.getElementById('age-requirement').checked ? 'block' : 'none';
+        const ageRequirementCheckbox = document.getElementById('age-requirement');
+        minAgeField.style.display = ageRequirementCheckbox.checked ? 'block' : 'none';
     }
 
     function addProject() {
+        const name = document.getElementById('project-name').value;
+        const description = document.getElementById('project-description').value;
+        const employeeId = document.getElementById('employee-id').value;
+        const minAge = document.getElementById('min-age').value;
+
+        fetch(projectApiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, description, employeeId, minAge })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to add project');
+                }
+                document.getElementById('project-form').reset();
+                toggleAddProjectForm();
+                fetchProjects();
+            })
+            .catch(error => console.error('Error adding project:', error));
+    }
+
+    function showEditProjectForm(id) {
+        fetch(`${projectApiUrl}/${id}`)
+            .then(response => response.json())
+            .then(project => {
+                document.getElementById('project-name').value = project.name;
+                document.getElementById('project-description').value = project.description;
+                document.getElementById('employee-id').value = project.employeeId;
+                document.getElementById('min-age').value = project.minAge || '';
+
+                const form = document.getElementById('add-project-form');
+                form.style.display = 'block';
+                document.querySelector('.btn-secondary-action').textContent = 'Update';
+                document.querySelector('.btn-secondary-action').setAttribute('onclick', `updateProject(${id})`);
+            })
+            .catch(error => console.error('Error fetching project:', error));
+    }
+
+    //done
+    function updateProject(id) {
         const name = document.getElementById('project-name').value;
         const description = document.getElementById('project-description').value;
         const employeeId = document.getElementById('employee-id').value;
@@ -254,32 +317,26 @@
             return;
         }
 
-        fetch(projectApiUrl, {
-            method: 'POST',
+        fetch(`${projectApiUrl}/${id}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name, description, employeeId })
+            body: JSON.stringify({ name, description, employeeId, minAge })
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Failed to add project');
+                    throw new Error('Failed to update project');
                 }
                 document.getElementById('project-form').reset();
                 toggleAddProjectForm();
                 fetchProjects();
             })
-            .catch(error => console.error('Error adding project:', error));
+            .catch(error => console.error('Error updating project:', error));
     }
 
-    function toggleAddProjectForm() {
-        const form = document.getElementById('add-project-form');
-        form.style.display = form.style.display === 'none' ? 'block' : 'none';
-    }
-
+    //done
     function deleteProject(id) {
-        if (!confirm('Are you sure you want to delete this project?')) return;
-
         fetch(`${projectApiUrl}/${id}`, {
             method: 'DELETE'
         })
@@ -293,9 +350,8 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        fetchEmployees();
         fetchProjects();
-        M.AutoInit(); // Initialize all Materialize components
+        fetchEmployees();
     });
 </script>
 </body>
