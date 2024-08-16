@@ -267,6 +267,13 @@
         const employeeId = document.getElementById('employee-id').value;
         const minAge = document.getElementById('min-age').value;
 
+        const selectedEmployee = document.querySelector(`#employee-id option[value="${employeeId}"]`);
+        const employeeAge = selectedEmployee ? selectedEmployee.dataset.age : null;
+        if (minAge && employeeAge && employeeAge < minAge) {
+            alert(`The assigned employee does not meet the minimum age requirement of ${minAge}.`);
+            return;
+        }
+
         fetch(projectApiUrl, {
             method: 'POST',
             headers: {
@@ -312,6 +319,7 @@
         const selectedEmployee = document.querySelector(`#employee-id option[value="${employeeId}"]`);
         const employeeAge = selectedEmployee ? selectedEmployee.dataset.age : null;
 
+        console.log(employeeAge);
         if (minAge && employeeAge && employeeAge < minAge) {
             alert(`The assigned employee does not meet the minimum age requirement of ${minAge}.`);
             return;
