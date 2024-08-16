@@ -50,12 +50,14 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto) {
         Employee employee = new Employee();
         employee.setName(employeeDto.getName());
-        employee.setEmail(employeeDto.getEmail());
         employee.setDepartment(employeeDto.getDepartment());
+        employee.setEmail(employeeDto.getEmail());
+        employee.setAge(employeeDto.getAge());
 
         Employee savedEmployee = employeeService.createEmployee(employee);
         return ResponseEntity.ok(assembler.toModel(savedEmployee));
     }
+
 
     // Delete an employee by ID using Employee entity
     @DeleteMapping("/{id}")

@@ -186,7 +186,7 @@
                     const listItem = document.createElement('li');
                     listItem.className = 'collection-item';
                     listItem.innerHTML = `
-                        ${employee.name} - ${employee.email}
+                        ${employee.name} - ${employee.email} - ${employee.age}
                         <button class="btn-delete" onclick="deleteEmployee(${employee.id})">Delete</button>
                     `;
                     list.appendChild(listItem);
@@ -198,14 +198,14 @@
         const name = document.getElementById('employee-name').value;
         const age = document.getElementById('employee-age').value;  // Get the age value
         const email = document.getElementById('employee-email').value;
-        const departmentId = document.getElementById('department-id').value;
+        const department = document.getElementById('department-id').value;
 
         fetch(employeeApiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ name, age, email, departmentId }),  // Include age in the JSON body
+            body: JSON.stringify({ name, age, email, department }),  // Include age in the JSON body
         })
             .then(response => response.json())
             .then(() => {

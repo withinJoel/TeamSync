@@ -6,12 +6,13 @@ import jakarta.persistence.*;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Added to auto-generate IDs
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+
     private int age;
+    private String department;  // This should be a String to match your table
     private String email;
-    private String department;
+    private String name;
 
     // Getters and Setters
     public Long getId() {
