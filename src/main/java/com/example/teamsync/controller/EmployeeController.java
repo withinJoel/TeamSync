@@ -24,13 +24,18 @@ public class EmployeeController {
 
     // List all employees using EmployeeDto
     @GetMapping
-    public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
-        List<Employee> employees = employeeService.getAllEmployees();
-        List<EmployeeDto> employeeDtos = employees.stream()
-                .map(assembler::toModel)
-                .collect(Collectors.toList());
+    public ResponseEntity<?> getAllEmployees() {
+        try {
+            List<Employee> employees = employeeService.getAllEmployees();
+            List<EmployeeDto> employeeDtos = employees.stream()
+                    .map(assembler::toModel)
+                    .collect(Collectors.toList());
 
-        return ResponseEntity.ok(employeeDtos);
+            return ResponseEntity.ok(employeeDtos);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while fetching employees.");
+        }
     }
 
     // Get an employee by ID

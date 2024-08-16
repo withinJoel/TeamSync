@@ -128,6 +128,10 @@
                     <label for="employee-name">Name</label>
                 </div>
                 <div class="input-field">
+                    <input type="text" id="employee-age" name="age" required>
+                    <label for="employee-age">Age</label>
+                </div>
+                <div class="input-field">
                     <input type="email" id="employee-email" name="email" required>
                     <label for="employee-email">Email</label>
                 </div>
@@ -192,6 +196,7 @@
 
     function addEmployee() {
         const name = document.getElementById('employee-name').value;
+        const age = document.getElementById('employee-age').value;  // Get the age value
         const email = document.getElementById('employee-email').value;
         const departmentId = document.getElementById('department-id').value;
 
@@ -200,14 +205,15 @@
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ name, email, departmentId }),
+            body: JSON.stringify({ name, age, email, departmentId }),  // Include age in the JSON body
         })
             .then(response => response.json())
             .then(() => {
                 fetchEmployees();
                 document.getElementById('employee-form').reset();
                 document.getElementById('add-employee-form').style.display = 'none';
-            });
+            })
+            .catch(error => console.error('Error adding employee:', error));
     }
 
     function showAddEmployeeForm() {

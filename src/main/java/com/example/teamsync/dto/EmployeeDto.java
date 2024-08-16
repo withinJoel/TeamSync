@@ -5,7 +5,7 @@ import org.springframework.hateoas.RepresentationModel;
 public class EmployeeDto extends RepresentationModel<EmployeeDto> {
     private long id;
     private String name;
-    private int age;
+    private int age;  // Ensure this is the correct type
     private String email;
     private String department;
 
@@ -26,12 +26,12 @@ public class EmployeeDto extends RepresentationModel<EmployeeDto> {
         this.name = name;
     }
 
-    private int getAge(){
-        return age;
+    public int getAge() {
+        return age;  // Getter must be public
     }
 
-    private void setAge(int age){
-        this.age = age;
+    public void setAge(int age) {
+        this.age = age;  // Setter must be public
     }
 
     public String getEmail() {
