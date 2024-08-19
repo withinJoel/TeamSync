@@ -119,7 +119,7 @@ spring.jpa.show-sql=true
 ![image](https://github.com/user-attachments/assets/b7c63af5-5643-42b8-b9a2-a6caffc4a127)
 
 # Want help use my Java & Springboot basics course (It's free)
-* https://github.com/withinJoel/LearnJava
+* https://github.com/withinJoel/TechForDummies
 
 # Support Me
 If you love TeamSync and want to keep me caffeinated for more awesome updates, consider buying me a coffee!
