@@ -2,7 +2,7 @@
 Made with 💖 by Joel Jolly.
 
 # About
-TeamSync is a comprehensive employee management and project tracking application designed to streamline the way you manage your workforce and projects. With TeamSync, you can effortlessly keep track of employee details, monitor the status of ongoing projects, and manage department information, all from a unified platform.
+* TeamSync is a comprehensive employee management and project tracking application designed to streamline the way you manage your workforce and projects. With TeamSync, you can effortlessly keep track of employee details, monitor the status of ongoing projects, and manage department information, all from a unified platform.
 
 # Project Current Progress
 1. Install Required Tools: ✅
@@ -118,7 +118,7 @@ spring.jpa.show-sql=true
 
 ![image](https://github.com/user-attachments/assets/b7c63af5-5643-42b8-b9a2-a6caffc4a127)
 
-# Want help use my Java & Springboot basics course (It's free)
+# Want help, Use my Java & Springboot basics course (It's free)
 * https://github.com/withinJoel/TechForDummies
 
 # Support Me
