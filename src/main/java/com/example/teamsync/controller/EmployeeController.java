@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/employees")
+@RequestMapping("/api/employees/v1/")
 public class EmployeeController {
 
     @Autowired
