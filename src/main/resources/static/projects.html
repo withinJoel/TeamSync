@@ -186,6 +186,8 @@
     const projectApiUrl = 'http://localhost:8084/teamsync/api/projects';
     const employeeApiUrl = 'http://localhost:8084/teamsync/api/employees';
 
+    const employeeMap = new Map();
+
     function fetchEmployees() {
         fetch(employeeApiUrl)
             .then(response => response.json())
@@ -193,6 +195,7 @@
                 const select = document.getElementById('employee-id');
                 select.innerHTML = '';
                 data.forEach(employee => {
+                    employeeMap.set(employee.id, employee.name); // Map employee ID to name
                     const option = document.createElement('option');
                     option.value = employee.id;
                     option.textContent = employee.name;
@@ -208,6 +211,10 @@
         fetch(projectApiUrl)
             .then(response => response.json())
             .then(data => {
+                console.log('Projects data:', data); // Log data to inspect its structure
+
+                // Access the projects array from the nested structure
+                const projects = data._embedded ? data._embedded.projectResourceList : [];
                 const list = document.getElementById('project-list');
                 list.innerHTML = ''; // Clear existing content
 
@@ -228,24 +235,32 @@
 
                 const tbody = document.createElement('tbody');
 
-                data.forEach(project => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                    <td>${project.name || 'No name'}</td>
-                    <td>${project.description || 'No description'}</td>
-                    <td>${project.employee ? project.employee.name : 'Unassigned'}</td>
-                    <td>
-                        <button class="btn-edit" onclick="showEditProjectForm(${project.id})">Edit</button>
-                        <button class="btn-delete" onclick="deleteProject(${project.id})">Delete</button>
-                    </td>
-                `;
-                    tbody.appendChild(row);
-                });
+                if (Array.isArray(projects)) {
+                    projects.forEach(project => {
+                        const employeeName = project.employeeId ? employeeMap.get(project.employeeId) || 'Unassigned' : 'Unassigned';
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                        <td>${project.name || 'No name'}</td>
+                        <td>${project.description || 'No description'}</td>
+                        <td>${employeeName}</td>
+                        <td>
+                            <button class="btn-edit" onclick="showEditProjectForm(${project.id})">Edit</button>
+                            <button class="btn-delete" onclick="deleteProject(${project.id})">Delete</button>
+                        </td>
+                    `;
+                        tbody.appendChild(row);
+                    });
+                } else {
+                    console.error('Projects data is not an array:', projects);
+                }
+
                 table.appendChild(tbody);
                 list.appendChild(table);
             })
             .catch(error => console.error('Error fetching projects:', error));
     }
+
+
 
     function toggleAddProjectForm() {
         const form = document.getElementById('add-project-form');

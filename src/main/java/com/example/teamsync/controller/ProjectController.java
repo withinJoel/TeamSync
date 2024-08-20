@@ -1,7 +1,9 @@
 package com.example.teamsync.controller;
 
 import com.example.teamsync.controller.assembler.ProjectResourceAssembler;
+import com.example.teamsync.controller.assembler.resource.EmployeeResource;
 import com.example.teamsync.controller.dto.ProjectDto;
+import com.example.teamsync.model.Employee;
 import com.example.teamsync.model.Project;
 import com.example.teamsync.controller.assembler.resource.ProjectResource;
 import com.example.teamsync.service.ProjectService;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
