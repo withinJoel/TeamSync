@@ -91,11 +91,15 @@ CREATE TABLE project (
 * Update the `application.properties`
 ```
 spring.application.name=teamsync
-spring.datasource.url=jdbc:mysql://localhost:3306/teamsync  //replace teamsync with your database name.
-spring.datasource.username=root  //mysql name
-spring.datasource.password=test123!  //mysql password
+spring.datasource.url=jdbc:mysql://localhost:3306/teamsync
+spring.datasource.username=root
+spring.datasource.password=test123!
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
+
+//For teamSync
+server.port=8084
+server.servlet.context-path=/teamsync
 ```
 * Paste the repo code inside the intellij project folder. (Before doing this create a new project using intellij and then close the intellij app and then paste the code from this repo)
 * Run the `build.gradle` (To install the packages)
