@@ -1,6 +1,6 @@
 package com.example.teamsync.service;
 
-import com.example.teamsync.dto.DepartmentDto;
+import com.example.teamsync.controller.dto.DepartmentDto;
 import com.example.teamsync.model.Department;
 import com.example.teamsync.repository.DepartmentRepository;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,20 +1,12 @@
-package com.example.teamsync.model;
+package com.example.teamsync.controller.assembler.resource;
 
-import jakarta.persistence.*;
+import org.springframework.hateoas.RepresentationModel;
 
-@Entity
-public class Project {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProjectResource extends RepresentationModel<ProjectResource> {
     private Long id;
-
     private String name;
     private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+    private Long employeeId;
 
     // Getters and Setters
     public Long getId() {
@@ -41,11 +33,11 @@ public class Project {
         this.description = description;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public Long getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 }

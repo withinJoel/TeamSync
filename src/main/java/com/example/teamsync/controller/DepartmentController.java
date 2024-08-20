@@ -1,6 +1,6 @@
 package com.example.teamsync.controller;
 
-import com.example.teamsync.dto.DepartmentDto;
+import com.example.teamsync.controller.dto.DepartmentDto;
 import com.example.teamsync.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

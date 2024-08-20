@@ -1,4 +1,4 @@
-package com.example.teamsync.dto;
+package com.example.teamsync.controller.dto;
 
 public class DepartmentDto {
     private String name;

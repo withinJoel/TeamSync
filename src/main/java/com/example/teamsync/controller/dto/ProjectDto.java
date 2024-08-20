@@ -1,9 +1,11 @@
-package com.example.teamsync.dto;
+package com.example.teamsync.controller.dto;
 
-public class ProjectDto {
+import org.springframework.hateoas.RepresentationModel;
+
+public class ProjectDto extends RepresentationModel<ProjectDto> {
     private String name;
     private String description;
-    private Long employeeId;
+    private Long employeeId;  // Ensure this field exists and is of type Long
 
     // Getters and Setters
     public String getName() {

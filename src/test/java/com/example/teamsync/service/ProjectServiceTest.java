@@ -1,6 +1,6 @@
 package com.example.teamsync.service;
 
-import com.example.teamsync.dto.ProjectDto;
+import com.example.teamsync.controller.dto.ProjectDto;
 import com.example.teamsync.model.Employee;
 import com.example.teamsync.model.Project;
 import com.example.teamsync.repository.EmployeeRepository;

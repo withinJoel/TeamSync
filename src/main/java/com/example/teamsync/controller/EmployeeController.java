@@ -1,8 +1,9 @@
 package com.example.teamsync.controller;
 
-import com.example.teamsync.assembler.EmployeeResourceAssembler;
-import com.example.teamsync.dto.EmployeeDto;
+import com.example.teamsync.controller.assembler.EmployeeResourceAssembler;
+import com.example.teamsync.controller.dto.EmployeeDto;
 import com.example.teamsync.model.Employee;
+import com.example.teamsync.controller.assembler.resource.EmployeeResource;
 import com.example.teamsync.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,16 +25,15 @@ public class EmployeeController {
     @Autowired
     private EmployeeResourceAssembler assembler;
 
-    // List all employees using EmployeeDto
     @GetMapping
     public ResponseEntity<?> getAllEmployees() {
         try {
             List<Employee> employees = employeeService.getAllEmployees();
-            List<EmployeeDto> employeeDtos = employees.stream()
+            List<EmployeeResource> employeeResources = employees.stream()
                     .map(assembler::toModel)
                     .collect(Collectors.toList());
 
-            return ResponseEntity.ok(employeeDtos);
+            return ResponseEntity.ok(employeeResources);
         } catch (Exception e) {
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", "An error occurred while fetching employees.");
@@ -42,16 +42,14 @@ public class EmployeeController {
         }
     }
 
-    // Get an employee by ID
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable Long id) {
+    public ResponseEntity<EmployeeResource> getEmployeeById(@PathVariable Long id) {
         Employee employee = employeeService.getEmployeeById(id);
         return ResponseEntity.ok(assembler.toModel(employee));
     }
 
-    // Create a new employee using Employee entity
     @PostMapping
-    public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto) {
+    public ResponseEntity<EmployeeResource> createEmployee(@RequestBody EmployeeDto employeeDto) {
         Employee employee = new Employee();
         employee.setName(employeeDto.getName());
         employee.setDepartment(employeeDto.getDepartment());
@@ -62,8 +60,6 @@ public class EmployeeController {
         return ResponseEntity.ok(assembler.toModel(savedEmployee));
     }
 
-
-    // Delete an employee by ID using Employee entity
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteEmployee(@PathVariable Long id) {
         try {

@@ -1,24 +1,19 @@
-package com.example.teamsync.model;
+package com.example.teamsync.controller.dto;
 
-import jakarta.persistence.*;
+import org.springframework.hateoas.RepresentationModel;
+
 import java.util.List;
 
-@Entity
-public class Employee {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class EmployeeDto extends RepresentationModel<EmployeeDto> {
     private Long id;
-
-    private int age;
+    private String name;
+    private Integer age;
     private String department;
     private String email;
-    private String name;
-
-    @OneToMany(mappedBy = "employee")
-    private List<Project> projects;
+    private List<ProjectDto> projects;
 
     // Getters and Setters
+
     public Long getId() {
         return id;
     }
@@ -35,20 +30,12 @@ public class Employee {
         this.name = name;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getDepartment() {
@@ -59,11 +46,19 @@ public class Employee {
         this.department = department;
     }
 
-    public List<Project> getProjects() {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<ProjectDto> getProjects() {
         return projects;
     }
 
-    public void setProjects(List<Project> projects) {
+    public void setProjects(List<ProjectDto> projects) {
         this.projects = projects;
     }
 }

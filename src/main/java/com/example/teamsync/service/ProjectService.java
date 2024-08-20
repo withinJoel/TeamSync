@@ -1,6 +1,6 @@
 package com.example.teamsync.service;
 
-import com.example.teamsync.dto.ProjectDto;
+import com.example.teamsync.controller.dto.ProjectDto;
 import com.example.teamsync.model.Employee;
 import com.example.teamsync.model.Project;
 import com.example.teamsync.repository.EmployeeRepository;
@@ -22,6 +22,13 @@ public class ProjectService {
 
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
+    }
+
+    public List<Project> getProjectsByEmployeeId(Long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new RuntimeException("Employee not found with id " + employeeId));
+
+        return projectRepository.findByEmployee(employee);
     }
 
     public Project addProject(ProjectDto projectDto) {

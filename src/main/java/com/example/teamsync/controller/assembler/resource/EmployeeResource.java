@@ -1,20 +1,23 @@
-package com.example.teamsync.dto;
+package com.example.teamsync.controller.assembler.resource;
 
 import org.springframework.hateoas.RepresentationModel;
 
-public class EmployeeDto extends RepresentationModel<EmployeeDto> {
-    private long id;
+import java.util.List;
+
+public class EmployeeResource extends RepresentationModel<EmployeeResource> {
+    private Long id;
     private String name;
-    private int age;  // Ensure this is the correct type
+    private int age;
     private String email;
     private String department;
+    private List<ProjectResource> projects;
 
-    // Getters and setters
-    public long getId() {
+    // Getters and Setters
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -27,11 +30,11 @@ public class EmployeeDto extends RepresentationModel<EmployeeDto> {
     }
 
     public int getAge() {
-        return age;  // Getter must be public
+        return age;
     }
 
     public void setAge(int age) {
-        this.age = age;  // Setter must be public
+        this.age = age;
     }
 
     public String getEmail() {
@@ -48,5 +51,13 @@ public class EmployeeDto extends RepresentationModel<EmployeeDto> {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    public List<ProjectResource> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<ProjectResource> projects) {
+        this.projects = projects;
     }
 }
