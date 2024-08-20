@@ -2,7 +2,7 @@
 Made with 💖 by Joel Jolly.
 
 # About
-TeamSync is a comprehensive employee management and project tracking application designed to streamline the way you manage your workforce and projects. With TeamSync, you can effortlessly keep track of employee details, monitor the status of ongoing projects, and manage department information, all from a unified platform.
+* TeamSync is a comprehensive employee management and project tracking application designed to streamline the way you manage your workforce and projects. With TeamSync, you can effortlessly keep track of employee details, monitor the status of ongoing projects, and manage department information, all from a unified platform.
 
 # Project Current Progress
 1. Install Required Tools: ✅
@@ -91,11 +91,15 @@ CREATE TABLE project (
 * Update the `application.properties`
 ```
 spring.application.name=teamsync
-spring.datasource.url=jdbc:mysql://localhost:3306/teamsync  //replace teamsync with your database name.
-spring.datasource.username=root  //mysql name
-spring.datasource.password=test123!  //mysql password
+spring.datasource.url=jdbc:mysql://localhost:3306/teamsync
+spring.datasource.username=root
+spring.datasource.password=test123!
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
+
+//For teamSync
+server.port=8084
+server.servlet.context-path=/teamsync
 ```
 * Paste the repo code inside the intellij project folder. (Before doing this create a new project using intellij and then close the intellij app and then paste the code from this repo)
 * Run the `build.gradle` (To install the packages)
@@ -118,7 +122,7 @@ spring.jpa.show-sql=true
 
 ![image](https://github.com/user-attachments/assets/b7c63af5-5643-42b8-b9a2-a6caffc4a127)
 
-# Want help use my Java & Springboot basics course (It's free)
+# Want help, Use my Java & Springboot basics course (It's free)
 * https://github.com/withinJoel/TechForDummies
 
 # Support Me
