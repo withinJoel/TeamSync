@@ -10,6 +10,7 @@ public class Project {
     private Long id;
 
     private String name;
+    private String status;
     private String description;
 
     @ManyToOne
@@ -31,6 +32,14 @@ public class Project {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getStatus(){
+        return status;
+    }
+
+    public void setStatus(String status){
+        this.status = status;
     }
 
     public String getDescription() {
