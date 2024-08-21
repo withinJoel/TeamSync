@@ -17,6 +17,7 @@ public class ProjectResourceAssembler implements RepresentationModelAssembler<Pr
         ProjectResource resource = new ProjectResource();
         resource.setId(project.getId());
         resource.setName(project.getName());
+        resource.setStatus(project.getStatus());
         resource.setDescription(project.getDescription());
 
         // Set employeeId if needed

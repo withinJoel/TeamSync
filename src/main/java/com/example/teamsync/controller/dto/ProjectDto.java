@@ -4,6 +4,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 public class ProjectDto extends RepresentationModel<ProjectDto> {
     private String name;
+    private String status;
     private String description;
     private Long employeeId;  // Ensure this field exists and is of type Long
 
@@ -14,6 +15,14 @@ public class ProjectDto extends RepresentationModel<ProjectDto> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getDescription() {

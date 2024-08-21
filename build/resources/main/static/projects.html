@@ -159,6 +159,10 @@
                     <label for="project-description">Description</label>
                 </div>
                 <div class="input-field">
+                    <input type="text" id="project-status" name="status" required>
+                    <label for="project-status">Status</label>
+                </div>
+                <div class="input-field">
                     <select id="employee-id" name="employeeId" required></select>
                     <label for="employee-id">Assign to Employee</label>
                 </div>
@@ -227,6 +231,7 @@
                 <tr>
                     <th>Project Name</th>
                     <th>Description</th>
+                    <th>Status</th>
                     <th>Assigned Employee</th>
                     <th>Actions</th>
                 </tr>
@@ -242,6 +247,7 @@
                         row.innerHTML = `
                         <td>${project.name || 'No name'}</td>
                         <td>${project.description || 'No description'}</td>
+                        <td>${project.status || 'No status'}</td>
                         <td>${employeeName}</td>
                         <td>
                             <button class="btn-edit" onclick="showEditProjectForm(${project.id})">Edit</button>
@@ -279,6 +285,7 @@
     function addProject() {
         const name = document.getElementById('project-name').value;
         const description = document.getElementById('project-description').value;
+        const status = document.getElementById('project-status').value;
         const employeeId = document.getElementById('employee-id').value;
         const minAge = document.getElementById('min-age').value;
 
@@ -294,7 +301,7 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name, description, employeeId, minAge })
+            body: JSON.stringify({ name, status, description, employeeId, minAge })
         })
             .then(response => {
                 if (!response.ok) {

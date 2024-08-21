@@ -5,6 +5,7 @@ import org.springframework.hateoas.RepresentationModel;
 public class ProjectResource extends RepresentationModel<ProjectResource> {
     private Long id;
     private String name;
+    private String status;
     private String description;
     private Long employeeId;
 
@@ -23,6 +24,13 @@ public class ProjectResource extends RepresentationModel<ProjectResource> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getDescription() {
