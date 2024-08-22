@@ -95,6 +95,8 @@ public class ProjectController {
 
     @GetMapping("/departments/skip/{department}/{name}")
     public ResponseEntity<ProjectResource> findBySkippedDescriptionAndName(@PathVariable String department, @PathVariable String name) {
+        System.out.println(department);
+        System.out.println(name);
         Project project = projectService.findBySkippedDescriptionAndName(department, name);
         return ResponseEntity.ok(assembler.toModel(project));
     }
