@@ -17,7 +17,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query ("select p from Project p where p.description = :department")
     Project findByDescription(String department);
 
-    @Query ("select p from Project p where p.description != :department")
+    @Query ("select p from Project p where p.description != :department limit 1")
     Project findBySkippedDescription(String department);
 
     @Query ("select p from Project p where p.description != :department and p.name != :name")
