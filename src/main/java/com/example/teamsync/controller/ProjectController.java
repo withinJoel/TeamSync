@@ -49,6 +49,13 @@ public class ProjectController {
         return ResponseEntity.ok(assembler.toModel(project));
     }
 
+    @GetMapping("/departments/{department}")
+    public ResponseEntity<ProjectResource> getProjectByDepartment(@PathVariable String department) {
+        Project project = projectService.test(department);
+        System.out.println(">>>>>>>>>>>>>>>>>>");
+        System.out.println(project.getId());
+        return ResponseEntity.ok(assembler.toModel(project));
+    }
     @PostMapping
     public ResponseEntity<ProjectResource> addProject(@RequestBody ProjectDto projectDto) {
         Project project = projectService.addProject(projectDto);
