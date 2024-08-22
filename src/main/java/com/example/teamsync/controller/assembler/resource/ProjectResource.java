@@ -2,10 +2,14 @@ package com.example.teamsync.controller.assembler.resource;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import java.time.LocalDate;
+
 public class ProjectResource extends RepresentationModel<ProjectResource> {
     private Long id;
     private String name;
     private String status;
+    private LocalDate start;
+    private LocalDate end;
     private String description;
     private Long employeeId;
 
@@ -31,6 +35,22 @@ public class ProjectResource extends RepresentationModel<ProjectResource> {
     }
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public LocalDate getStart() {
+        return start;
+    }
+
+    public void setStart(LocalDate start) {
+        this.start = start;
+    }
+
+    public LocalDate getEnd() {
+        return end;
+    }
+
+    public void setEnd(LocalDate end) {
+        this.end = end;
     }
 
     public String getDescription() {

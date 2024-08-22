@@ -2,6 +2,8 @@ package com.example.teamsync.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 public class Project {
 
@@ -11,6 +13,8 @@ public class Project {
 
     private String name;
     private String status;
+    private LocalDate start;
+    private LocalDate end;
     private String description;
 
     @ManyToOne
@@ -40,6 +44,22 @@ public class Project {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public LocalDate getStart() {
+        return start;
+    }
+
+    public void setStart(LocalDate start) {
+        this.start = start;
+    }
+
+    public LocalDate getEnd() {
+        return end;
+    }
+
+    public void setEnd(LocalDate end) {
+        this.end = end;
     }
 
     public String getDescription() {

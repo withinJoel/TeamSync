@@ -35,6 +35,8 @@ public class ProjectService {
         Project project = new Project();
         project.setName(projectDto.getName());
         project.setStatus(projectDto.getStatus());
+        project.setStart(projectDto.getStart());
+        project.setEnd(projectDto.getEnd());
         project.setDescription(projectDto.getDescription());
 
         if (projectDto.getEmployeeId() != null) {

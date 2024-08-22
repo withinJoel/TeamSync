@@ -2,9 +2,13 @@ package com.example.teamsync.controller.dto;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import java.time.LocalDate;
+
 public class ProjectDto extends RepresentationModel<ProjectDto> {
     private String name;
     private String status;
+    private LocalDate start;
+    private LocalDate end;
     private String description;
     private Long employeeId;  // Ensure this field exists and is of type Long
 
@@ -23,6 +27,22 @@ public class ProjectDto extends RepresentationModel<ProjectDto> {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public LocalDate getStart() {
+        return start;
+    }
+
+    public void setStart(LocalDate start) {
+        this.start = start;
+    }
+
+    public LocalDate getEnd() {
+        return end;
+    }
+
+    public void setEnd(LocalDate end) {
+        this.end = end;
     }
 
     public String getDescription() {

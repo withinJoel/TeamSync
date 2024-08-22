@@ -159,9 +159,16 @@
                     <label for="project-description">Description</label>
                 </div>
                 <div class="input-field">
-                    <select>
                     <input type="text" id="project-status" name="status" required>
                     <label for="project-status">Status</label>
+                </div>
+                <div class="input-field">
+                        <input type="text" id="project-start-date" name="startDate" required>
+                        <label for="project-start-date">Start Date (YYYY-MM-DD)</label>
+                </div>
+                <div class="input-field">
+                        <input type="text" id="project-end-date" name="endDate" required>
+                        <label for="project-end-date">End Date</label>
                 </div>
                 <div class="input-field">
                     <select id="employee-id" name="employeeId" required></select>
@@ -233,6 +240,8 @@
                     <th>Project Name</th>
                     <th>Description</th>
                     <th>Status</th>
+                    <th>Start</th>
+                    <th>End</th>
                     <th>Assigned Employee</th>
                     <th>Actions</th>
                 </tr>
@@ -249,6 +258,8 @@
                         <td>${project.name || 'No name'}</td>
                         <td>${project.description || 'No description'}</td>
                         <td>${project.status || 'No status'}</td>
+                        <td>${project.start || 'No Start'}</td>
+                        <td>${project.end || 'No end'}</td>
                         <td>${employeeName}</td>
                         <td>
                             <button class="btn-edit" onclick="showEditProjectForm(${project.id})">Edit</button>
@@ -287,6 +298,8 @@
         const name = document.getElementById('project-name').value;
         const description = document.getElementById('project-description').value;
         const status = document.getElementById('project-status').value;
+        const start = document.getElementById('project-start-date').value;
+        const end = document.getElementById('project-end-date').value;
         const employeeId = document.getElementById('employee-id').value;
         const minAge = document.getElementById('min-age').value;
 
@@ -302,7 +315,7 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name, status, description, employeeId, minAge })
+            body: JSON.stringify({ name, status, start, end, description, employeeId, minAge })
         })
             .then(response => {
                 if (!response.ok) {
