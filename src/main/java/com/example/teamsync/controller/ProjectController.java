@@ -83,8 +83,19 @@ public class ProjectController {
     //Experimental Features
     @GetMapping("/departments/{department}")
     public ResponseEntity<ProjectResource> getProjectByDepartment(@PathVariable String department) {
-        Project project = projectService.test(department);
-        System.out.println(project.getId());
+        Project project = projectService.findByDescription(department);
+        return ResponseEntity.ok(assembler.toModel(project));
+    }
+
+    @GetMapping ("/departments/skip/{department}")
+    public ResponseEntity<ProjectResource> getProjectByDepartmentSkip(@PathVariable String department) {
+        Project project = projectService.findBySkippedDescription(department);
+        return ResponseEntity.ok(assembler.toModel(project));
+    }
+
+    @GetMapping("/departments/skip/{department}/{name}")
+    public ResponseEntity<ProjectResource> findBySkippedDescriptionAndName(@PathVariable String department, @PathVariable String name) {
+        Project project = projectService.findBySkippedDescriptionAndName(department, name);
         return ResponseEntity.ok(assembler.toModel(project));
     }
 }

@@ -78,8 +78,18 @@ public class ProjectService {
     }
 
     //Experimental Features
-    public Project test (String department) {
-        Project project = projectRepository.findByDescriptionAndId(department, 1L);
+    public Project findByDescription (String department) {
+        Project project = projectRepository.findByDescription(department);
+        return project;
+    }
+
+    public Project findBySkippedDescription (String department){
+        Project project = projectRepository.findBySkippedDescription(department);
+        return project;
+    }
+
+    public Project findBySkippedDescriptionAndName (String department, String name) {
+        Project project = projectRepository.findBySkippedDescriptionAndName(department, name);
         return project;
     }
 }

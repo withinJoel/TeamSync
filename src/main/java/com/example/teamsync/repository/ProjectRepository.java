@@ -13,6 +13,13 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     //Experimental Features
     //(Not For production)(Logic might be choppy)
-    @Query ("select p from Project p where p.description = :department and p.id = :id")
-    Project findByDescriptionAndId(String department, Long id);
+
+    @Query ("select p from Project p where p.description = :department")
+    Project findByDescription(String department);
+
+    @Query ("select p from Project p where p.description != :department")
+    Project findBySkippedDescription(String department);
+
+    @Query ("select p from Project p where p.description != :department and p.name != :name")
+    Project findBySkippedDescriptionAndName(String name, String department);
 }
