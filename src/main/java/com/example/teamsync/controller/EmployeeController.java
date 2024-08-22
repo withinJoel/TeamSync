@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @RestController
@@ -54,6 +55,7 @@ public class EmployeeController {
         employee.setName(employeeDto.getName());
         employee.setDepartment(employeeDto.getDepartment());
         employee.setEmail(employeeDto.getEmail());
+        employee.setToken(employeeDto.getToken());
         employee.setAge(employeeDto.getAge());
 
         Employee savedEmployee = employeeService.createEmployee(employee);

@@ -9,6 +9,7 @@ public class EmployeeDto extends RepresentationModel<EmployeeDto> {
     private String name;
     private Integer age;
     private String department;
+    private String token;
     private String email;
     private List<ProjectDto> projects;
 
@@ -52,6 +53,14 @@ public class EmployeeDto extends RepresentationModel<EmployeeDto> {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String  getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public List<ProjectDto> getProjects() {

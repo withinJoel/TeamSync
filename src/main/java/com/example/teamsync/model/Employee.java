@@ -14,6 +14,7 @@ public class Employee {
     private String department;
     private String email;
     private String name;
+    private String token;
 
     @OneToMany(mappedBy = "employee")
     private List<Project> projects;
@@ -29,6 +30,14 @@ public class Employee {
 
     public String getName() {
         return name;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public void setName(String name) {

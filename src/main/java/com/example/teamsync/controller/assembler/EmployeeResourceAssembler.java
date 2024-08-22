@@ -31,6 +31,7 @@ public class EmployeeResourceAssembler extends RepresentationModelAssemblerSuppo
         resource.setAge(employee.getAge());
         resource.setEmail(employee.getEmail());
         resource.setDepartment(employee.getDepartment());
+        resource.setToken(employee.getToken());
 
         // Populate the projects field
         List<ProjectResource> projectResources = employee.getProjects().stream()

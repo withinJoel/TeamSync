@@ -10,6 +10,7 @@ public class EmployeeResource extends RepresentationModel<EmployeeResource> {
     private int age;
     private String email;
     private String department;
+    private String token;
     private List<ProjectResource> projects;
 
     // Getters and Setters
@@ -51,6 +52,14 @@ public class EmployeeResource extends RepresentationModel<EmployeeResource> {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public List<ProjectResource> getProjects() {
