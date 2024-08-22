@@ -73,12 +73,13 @@ public class ProjectService {
         return projectRepository.save(project);
     }
 
+    public void deleteProject(Long id) {
+        projectRepository.deleteById(id);
+    }
+
+    //Experimental Features
     public Project test (String department) {
         Project project = projectRepository.findByDescriptionAndId(department, 1L);
         return project;
-    }
-
-    public void deleteProject(Long id) {
-        projectRepository.deleteById(id);
     }
 }

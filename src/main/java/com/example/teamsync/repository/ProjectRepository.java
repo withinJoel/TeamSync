@@ -11,7 +11,8 @@ import java.util.*;
 public interface ProjectRepository extends JpaRepository<Project, Long> {
     List<Project> findByEmployee(Employee employee);
 
-    //Experimental (Not For production)(Logic might be choppy)
+    //Experimental Features
+    //(Not For production)(Logic might be choppy)
     @Query ("select p from Project p where p.description = :department and p.id = :id")
     Project findByDescriptionAndId(String department, Long id);
 }
