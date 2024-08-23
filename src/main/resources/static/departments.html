@@ -129,8 +129,21 @@
     const apiUrl = 'http://localhost:8084/teamsync/api/departments';
 
     function fetchDepartments() {
-        fetch(apiUrl)
-            .then(response => response.json())
+        const apiKey = 'xyXfX4pzoBhJYIMygh1eu8qPvlp8dkBEjKRzzOK90yQYgV9W6jMrHBbDdyM2tPuT'; // Replace with your actual API key
+
+        fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+                'API-Key': apiKey,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('API key invalid or network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 const list = document.getElementById('department-list');
                 list.innerHTML = ''; // Clear existing content
@@ -141,10 +154,10 @@
 
                 const thead = document.createElement('thead');
                 thead.innerHTML = `
-                <tr>
-                    <th>Department Name</th>
-                </tr>
-            `;
+            <tr>
+                <th>Department Name</th>
+            </tr>
+        `;
                 table.appendChild(thead);
 
                 const tbody = document.createElement('tbody');
@@ -152,22 +165,28 @@
                 data.forEach(department => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                    <td>${department.name}</td>
-                `;
+                <td>${department.name}</td>
+            `;
                     tbody.appendChild(row);
                 });
 
                 table.appendChild(tbody);
                 list.appendChild(table); // Append the table to the list element
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle the error appropriately in your UI
             });
     }
 
     function addDepartment() {
+        const apiKey = 'xyXfX4pzoBhJYIMygh1eu8qPvlp8dkBEjKRzzOK90yQYgV9W6jMrHBbDdyM2tPuT';
         const name = document.getElementById('department-name').value;
 
         fetch(apiUrl, {
             method: 'POST',
             headers: {
+                'API-Key': apiKey,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ name }),

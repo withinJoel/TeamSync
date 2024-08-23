@@ -6,6 +6,7 @@ import com.example.teamsync.controller.dto.ProjectDto;
 import com.example.teamsync.model.Employee;
 import com.example.teamsync.model.Project;
 import com.example.teamsync.controller.assembler.resource.ProjectResource;
+import com.example.teamsync.service.EmployeeService;
 import com.example.teamsync.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -28,8 +29,12 @@ public class ProjectController {
     private ProjectService projectService;
 
     @Autowired
+    private EmployeeService employeeService;
+
+    @Autowired
     private ProjectResourceAssembler assembler;
 
+    //Requires Support
     @GetMapping
     public ResponseEntity<CollectionModel<ProjectResource>> getAllProjects() {
         List<Project> projects = projectService.getAllProjects();
@@ -43,28 +48,41 @@ public class ProjectController {
         return ResponseEntity.ok(projectResourceCollection);
     }
 
+    //Requires Support
     @GetMapping("/{id}")
     public ResponseEntity<ProjectResource> getProjectById(@PathVariable Long id) {
-        Project project = projectService.getProjectById(id);
-        return ResponseEntity.ok(assembler.toModel(project));
+            Project project = projectService.getProjectById(id);
+            return ResponseEntity.ok(assembler.toModel(project));
     }
 
+    //Supports API
     @PostMapping
-    public ResponseEntity<ProjectResource> addProject(@RequestBody ProjectDto projectDto) {
-        Project project = projectService.addProject(projectDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(assembler.toModel(project));
+    public ResponseEntity<?> addProject(@RequestBody ProjectDto projectDto, @RequestHeader("API-Key") String apiKey) {
+        if (isValidApiKey(apiKey)) {
+            Project project = projectService.addProject(projectDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(assembler.toModel(project));
+        }
+        return ResponseEntity.status(401).body("Invalid API Key");
     }
 
+    //Supports API
     @PutMapping("/{id}")
-    public ResponseEntity<ProjectResource> updateProject(@PathVariable Long id, @RequestBody ProjectDto projectDto) {
-        Project project = projectService.updateProject(id, projectDto);
-        return ResponseEntity.ok(assembler.toModel(project));
+    public ResponseEntity<?> updateProject(@PathVariable Long id, @RequestBody ProjectDto projectDto,  @RequestHeader("API-Key") String apiKey) {
+        if (isValidApiKey(apiKey)){
+            Project project = projectService.updateProject(id, projectDto);
+            return ResponseEntity.ok(assembler.toModel(project));
+        }
+        return ResponseEntity.status(401).body("Invalid API Key");
     }
 
+    //Supports API
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
+    public ResponseEntity<?> deleteProject(@PathVariable Long id, @RequestHeader("API-Key") String apiKey) {
+        if (isValidApiKey(apiKey)){
         projectService.deleteProject(id);
         return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.status(401).body("Invalid API Key");
     }
 
     @GetMapping("/employee/{employeeId}")
@@ -99,5 +117,9 @@ public class ProjectController {
         System.out.println(name);
         Project project = projectService.findBySkippedDescriptionAndName(department, name);
         return ResponseEntity.ok(assembler.toModel(project));
+    }
+
+    private boolean isValidApiKey(String apiKey) {
+        return employeeService.isValidToken(apiKey);
     }
 }

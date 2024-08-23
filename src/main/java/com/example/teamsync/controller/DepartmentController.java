@@ -24,6 +24,7 @@ public class DepartmentController {
             return ResponseEntity.ok(departmentService.getAllDepartments());
     }
 
+    //Supports API
     @GetMapping("/{id}")
     public ResponseEntity<?> getDepartmentById(@PathVariable Long id, @RequestHeader("API-Key") String apiKey) {
         if (isValidApiKey(apiKey)) {
@@ -34,6 +35,7 @@ public class DepartmentController {
         return ResponseEntity.status(401).body("Invalid API Key");
     }
 
+    //Supports API
     @PostMapping
     public ResponseEntity<?> createDepartment(@RequestBody DepartmentDto departmentDto, @RequestHeader("API-Key") String apiKey) {
         if (isValidApiKey(apiKey)) {
@@ -42,6 +44,7 @@ public class DepartmentController {
         return ResponseEntity.status(401).body("Invalid API Key");
     }
 
+    //Supports API
     @PutMapping("/{id}")
     public ResponseEntity<?> updateDepartment(@PathVariable Long id, @RequestBody DepartmentDto departmentDto, @RequestHeader("API-Key") String apiKey) {
         if (isValidApiKey(apiKey)) {
@@ -50,6 +53,7 @@ public class DepartmentController {
         return ResponseEntity.status(401).body("Invalid API Key");
     }
 
+    //Supports API
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDepartment(@PathVariable Long id, @RequestHeader("API-Key") String apiKey) {
         if (isValidApiKey(apiKey)) {

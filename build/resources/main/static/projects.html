@@ -201,8 +201,21 @@
     const employeeMap = new Map();
 
     function fetchEmployees() {
-        fetch(employeeApiUrl)
-            .then(response => response.json())
+        const apiKey = 'xyXfX4pzoBhJYIMygh1eu8qPvlp8dkBEjKRzzOK90yQYgV9W6jMrHBbDdyM2tPuT'; // Replace with your actual API key
+
+        fetch(employeeApiUrl, {
+            method: 'GET',
+            headers: {
+                'API-Key': apiKey,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('API key invalid or network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 const select = document.getElementById('employee-id');
                 select.innerHTML = '';
@@ -219,9 +232,23 @@
             .catch(error => console.error('Error fetching employees:', error));
     }
 
+
     function fetchProjects() {
-        fetch(projectApiUrl)
-            .then(response => response.json())
+        const apiKey = 'xyXfX4pzoBhJYIMygh1eu8qPvlp8dkBEjKRzzOK90yQYgV9W6jMrHBbDdyM2tPuT'; // Replace with your actual API key
+
+        fetch(projectApiUrl, {
+            method: 'GET',
+            headers: {
+                'API-Key': apiKey,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('API key invalid or network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 console.log('Projects data:', data); // Log data to inspect its structure
 
@@ -236,16 +263,16 @@
 
                 const thead = document.createElement('thead');
                 thead.innerHTML = `
-                <tr>
-                    <th>Project Name</th>
-                    <th>Description</th>
-                    <th>Status</th>
-                    <th>Start</th>
-                    <th>End</th>
-                    <th>Assigned Employee</th>
-                    <th>Actions</th>
-                </tr>
-            `;
+            <tr>
+                <th>Project Name</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Assigned Employee</th>
+                <th>Actions</th>
+            </tr>
+        `;
                 table.appendChild(thead);
 
                 const tbody = document.createElement('tbody');
@@ -255,17 +282,17 @@
                         const employeeName = project.employeeId ? employeeMap.get(project.employeeId) || 'Unassigned' : 'Unassigned';
                         const row = document.createElement('tr');
                         row.innerHTML = `
-                        <td>${project.name || 'No name'}</td>
-                        <td>${project.description || 'No description'}</td>
-                        <td>${project.status || 'No status'}</td>
-                        <td>${project.start || 'No Start'}</td>
-                        <td>${project.end || 'In progress'}</td>
-                        <td>${employeeName || 'No employee assigned'}</td>
-                        <td>
-                            <button class="btn-edit" onclick="showEditProjectForm(${project.id})">Edit</button>
-                            <button class="btn-delete" onclick="deleteProject(${project.id})">Delete</button>
-                        </td>
-                    `;
+                    <td>${project.name || 'No name'}</td>
+                    <td>${project.description || 'No description'}</td>
+                    <td>${project.status || 'No status'}</td>
+                    <td>${project.start || 'No Start'}</td>
+                    <td>${project.end || 'In progress'}</td>
+                    <td>${employeeName || 'No employee assigned'}</td>
+                    <td>
+                        <button class="btn-edit" onclick="showEditProjectForm(${project.id})">Edit</button>
+                        <button class="btn-delete" onclick="deleteProject(${project.id})">Delete</button>
+                    </td>
+                `;
                         tbody.appendChild(row);
                     });
                 } else {
@@ -302,7 +329,7 @@
         const end = document.getElementById('project-end-date').value;
         const employeeId = document.getElementById('employee-id').value;
         const minAge = document.getElementById('min-age').value;
-
+        const apiKey = 'xyXfX4pzoBhJYIMygh1eu8qPvlp8dkBEjKRzzOK90yQYgV9W6jMrHBbDdyM2tPuT';
         const selectedEmployee = document.querySelector(`#employee-id option[value="${employeeId}"]`);
         const employeeAge = selectedEmployee ? selectedEmployee.dataset.age : null;
         if (minAge && employeeAge && employeeAge < minAge) {
@@ -313,6 +340,7 @@
         fetch(projectApiUrl, {
             method: 'POST',
             headers: {
+                'API-Key': apiKey,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ name, status, start, end, description, employeeId, minAge })
@@ -351,7 +379,7 @@
         const description = document.getElementById('project-description').value;
         const employeeId = document.getElementById('employee-id').value;
         const minAge = document.getElementById('min-age').value;
-
+        const apiKey = 'xyXfX4pzoBhJYIMygh1eu8qPvlp8dkBEjKRzzOK90yQYgV9W6jMrHBbDdyM2tPuT';
         const selectedEmployee = document.querySelector(`#employee-id option[value="${employeeId}"]`);
         const employeeAge = selectedEmployee ? selectedEmployee.dataset.age : null;
 
@@ -364,6 +392,7 @@
         fetch(`${projectApiUrl}/${id}`, {
             method: 'PUT',
             headers: {
+                'API-Key': apiKey,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ name, description, employeeId, minAge })
@@ -381,8 +410,12 @@
 
     //done
     function deleteProject(id) {
+        const apiKey = 'xyXfX4pzoBhJYIMygh1eu8qPvlp8dkBEjKRzzOK90yQYgV9W6jMrHBbDdyM2tPuT';
         fetch(`${projectApiUrl}/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'API-Key': apiKey
+            }
         })
             .then(response => {
                 if (!response.ok) {

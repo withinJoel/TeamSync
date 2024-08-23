@@ -25,9 +25,10 @@ public class EmployeeController {
     @Autowired
     private EmployeeResourceAssembler assembler;
 
+    //Supports API
     @GetMapping
     public ResponseEntity<?> getAllEmployees(@RequestHeader("API-Key") String apiKey) {
-        if (employeeService.isValidToken(apiKey)){
+        if (isValidApiKey(apiKey)){
             try {
                 List<Employee> employees = employeeService.getAllEmployees();
                 List<EmployeeResource> employeeResources = employees.stream()
@@ -46,32 +47,43 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeResource> getEmployeeById(@PathVariable Long id) {
+    public ResponseEntity<?> getEmployeeById(@PathVariable Long id) {
         Employee employee = employeeService.getEmployeeById(id);
         return ResponseEntity.ok(assembler.toModel(employee));
     }
 
+    //Supports API
     @PostMapping
-    public ResponseEntity<EmployeeResource> createEmployee(@RequestBody EmployeeDto employeeDto) {
-        Employee employee = new Employee();
-        employee.setName(employeeDto.getName());
-        employee.setDepartment(employeeDto.getDepartment());
-        employee.setEmail(employeeDto.getEmail());
-        employee.setToken(employeeDto.getToken());
-        employee.setAge(employeeDto.getAge());
+    public ResponseEntity<?> createEmployee(@RequestBody EmployeeDto employeeDto, @RequestHeader("API-Key") String apiKey) {
+        if (isValidApiKey(apiKey)){
+            Employee employee = new Employee();
+            employee.setName(employeeDto.getName());
+            employee.setDepartment(employeeDto.getDepartment());
+            employee.setEmail(employeeDto.getEmail());
+            employee.setToken(employeeDto.getToken());
+            employee.setAge(employeeDto.getAge());
 
-        Employee savedEmployee = employeeService.createEmployee(employee);
-        return ResponseEntity.ok(assembler.toModel(savedEmployee));
+            Employee savedEmployee = employeeService.createEmployee(employee);
+            return ResponseEntity.ok(assembler.toModel(savedEmployee));
+        }
+        return ResponseEntity.status(401).body("Invalid API Key");
     }
 
+    //Supports API
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable Long id) {
-        try {
-            employeeService.deleteEmployee(id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("An error occurred while deleting employee with ID " + id);
+    public ResponseEntity<?> deleteEmployee(@PathVariable Long id, @RequestHeader("API-Key") String apiKey) {
+        if (isValidApiKey(apiKey)){
+            try {
+                employeeService.deleteEmployee(id);
+                return ResponseEntity.noContent().build();
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("An error occurred while deleting employee with ID " + id);
+            }
         }
+        return ResponseEntity.status(401).body("Invalid API Key");
+    }
+    private boolean isValidApiKey(String apiKey) {
+        return employeeService.isValidToken(apiKey);
     }
 }

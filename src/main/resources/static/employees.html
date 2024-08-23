@@ -165,6 +165,7 @@
         return token;
     }
 
+    //Supports API
     function fetchDepartments() {
         const apiKey = 'xyXfX4pzoBhJYIMygh1eu8qPvlp8dkBEjKRzzOK90yQYgV9W6jMrHBbDdyM2tPuT';
 
@@ -199,9 +200,23 @@
             });
     }
 
+    //Supports API
     function fetchEmployees() {
-        fetch(employeeApiUrl)
-            .then(response => response.json())
+        const apiKey = 'xyXfX4pzoBhJYIMygh1eu8qPvlp8dkBEjKRzzOK90yQYgV9W6jMrHBbDdyM2tPuT'; // Replace with your actual API key
+
+        fetch(employeeApiUrl, {
+            method: 'GET',
+            headers: {
+                'API-Key': apiKey,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('API key invalid or network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 const list = document.getElementById('employee-list');
                 list.innerHTML = ''; // Clear existing content
@@ -212,15 +227,15 @@
 
                 const thead = document.createElement('thead');
                 thead.innerHTML = `
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Age</th>
-                    <th>Department</th>
-                    <th>Access Token</th>
-                    <th>Actions</th>
-                </tr>
-            `;
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Department</th>
+                <th>Access Token</th>
+                <th>Actions</th>
+            </tr>
+        `;
                 table.appendChild(thead);
 
                 const tbody = document.createElement('tbody');
@@ -228,24 +243,30 @@
                 data.forEach(employee => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                    <td>${employee.name}</td>
-                    <td>${employee.email}</td>
-                    <td>${employee.age}</td>
-                    <td>${employee.department}</td>
-                    <td>${employee.token}</td>
-                    <td>
-                        <button class="btn-delete" onclick="deleteEmployee(${employee.id})">Delete</button>
-                    </td>
-                `;
+                <td>${employee.name}</td>
+                <td>${employee.email}</td>
+                <td>${employee.age}</td>
+                <td>${employee.department}</td>
+                <td>${employee.token}</td>
+                <td>
+                    <button class="btn-delete" onclick="deleteEmployee(${employee.id})">Delete</button>
+                </td>
+            `;
                     tbody.appendChild(row);
                 });
 
                 table.appendChild(tbody);
                 list.appendChild(table); // Append the table to the list element
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle the error appropriately in your UI
             });
     }
 
+
     function addEmployee() {
+        const apiKey = 'xyXfX4pzoBhJYIMygh1eu8qPvlp8dkBEjKRzzOK90yQYgV9W6jMrHBbDdyM2tPuT';
         const name = document.getElementById('employee-name').value;
         const age = document.getElementById('employee-age').value;  // Get the age value
         const email = document.getElementById('employee-email').value;
@@ -256,6 +277,7 @@
         fetch(employeeApiUrl, {
             method: 'POST',
             headers: {
+                'API-Key': apiKey,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ name, age, email, department, token }),  // Include age in the JSON body
@@ -275,8 +297,12 @@
     }
 
     function deleteEmployee(id) {
+        const apiKey = 'xyXfX4pzoBhJYIMygh1eu8qPvlp8dkBEjKRzzOK90yQYgV9W6jMrHBbDdyM2tPuT';
         fetch(`${employeeApiUrl}/${id}`, {
             method: 'DELETE',
+            headers: {
+                'API-Key': apiKey
+            }
         })
             .then(() => {
                 fetchEmployees();
