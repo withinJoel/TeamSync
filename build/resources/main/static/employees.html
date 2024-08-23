@@ -18,7 +18,7 @@
             padding: 0;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1600px;
             margin: 20px auto;
             padding: 20px;
             background: #ffffff;
@@ -156,7 +156,7 @@
     const departmentNames = [];
 
     function generateToken() {
-        const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        const CHARS = "abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         let token = '';
         while (token.length < 64) { // length of the random string
             const index = Math.floor(Math.random() * CHARS.length);
