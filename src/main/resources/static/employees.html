@@ -187,11 +187,12 @@
                 select.innerHTML = '';
                 data.forEach(department => {
                     const option = document.createElement('option');
-                    option.value = department.id;
+                    option.value = department.name;
                     option.textContent = department.name;
                     select.appendChild(option);
                     departmentNames.push(department.name);
                 });
+                console.log(select);
                 M.FormSelect.init(select); // Initialize Materialize select component
             })
             .catch(error => {
@@ -271,8 +272,8 @@
         const age = document.getElementById('employee-age').value;  // Get the age value
         const email = document.getElementById('employee-email').value;
         const department = document.getElementById('department-id').value;
+        console.log(department);
         const token = generateToken();
-        console.log(token);
 
         fetch(employeeApiUrl, {
             method: 'POST',

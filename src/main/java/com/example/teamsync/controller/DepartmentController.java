@@ -6,6 +6,7 @@ import com.example.teamsync.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.teamsync.model.Department;
 
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class DepartmentController {
     private EmployeeService employeeService;
 
     @GetMapping
-    public ResponseEntity<?> getAllDepartments() {
-            return ResponseEntity.ok(departmentService.getAllDepartments());
+    public List<Department> getAllDepartments() {
+        return departmentService.getAllDepartments();
     }
 
     //Supports API

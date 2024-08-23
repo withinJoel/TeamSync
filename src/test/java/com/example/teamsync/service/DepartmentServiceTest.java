@@ -36,7 +36,7 @@ public class DepartmentServiceTest {
         department.setName("HR");
         when(departmentRepository.findAll()).thenReturn(Collections.singletonList(department));
 
-        List<DepartmentDto> departments = departmentService.getAllDepartments();
+        List<Department> departments = departmentService.getAllDepartments();
         assertEquals(1, departments.size());
         assertEquals("HR", departments.get(0).getName());
         verify(departmentRepository, times(1)).findAll();

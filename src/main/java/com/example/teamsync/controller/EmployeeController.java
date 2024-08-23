@@ -54,19 +54,16 @@ public class EmployeeController {
 
     //Supports API
     @PostMapping
-    public ResponseEntity<?> createEmployee(@RequestBody EmployeeDto employeeDto, @RequestHeader("API-Key") String apiKey) {
-        if (isValidApiKey(apiKey)){
-            Employee employee = new Employee();
-            employee.setName(employeeDto.getName());
-            employee.setDepartment(employeeDto.getDepartment());
-            employee.setEmail(employeeDto.getEmail());
-            employee.setToken(employeeDto.getToken());
-            employee.setAge(employeeDto.getAge());
+    public ResponseEntity<EmployeeResource> createEmployee(@RequestBody EmployeeDto employeeDto) {
+        Employee employee = new Employee();
+        employee.setName(employeeDto.getName());
+        employee.setDepartment(employeeDto.getDepartment());
+        employee.setEmail(employeeDto.getEmail());
+        employee.setToken(employeeDto.getToken());
+        employee.setAge(employeeDto.getAge());
 
-            Employee savedEmployee = employeeService.createEmployee(employee);
-            return ResponseEntity.ok(assembler.toModel(savedEmployee));
-        }
-        return ResponseEntity.status(401).body("Invalid API Key");
+        Employee savedEmployee = employeeService.createEmployee(employee);
+        return ResponseEntity.ok(assembler.toModel(savedEmployee));
     }
 
     //Supports API

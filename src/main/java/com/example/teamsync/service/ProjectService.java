@@ -79,6 +79,9 @@ public class ProjectService {
 
     //Experimental Features
 
+    public boolean isValidToken(String token) {
+        return employeeRepository.existsByToken(token);
+    }
 
     public Project findByDescription (String department) {
         Project project = projectRepository.findByDescription(department);
