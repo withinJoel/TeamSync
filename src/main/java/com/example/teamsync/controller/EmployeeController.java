@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 @RestController
@@ -27,20 +26,23 @@ public class EmployeeController {
     private EmployeeResourceAssembler assembler;
 
     @GetMapping
-    public ResponseEntity<?> getAllEmployees() {
-        try {
-            List<Employee> employees = employeeService.getAllEmployees();
-            List<EmployeeResource> employeeResources = employees.stream()
-                    .map(assembler::toModel)
-                    .collect(Collectors.toList());
+    public ResponseEntity<?> getAllEmployees(@RequestHeader("API-Key") String apiKey) {
+        if (employeeService.isValidToken(apiKey)){
+            try {
+                List<Employee> employees = employeeService.getAllEmployees();
+                List<EmployeeResource> employeeResources = employees.stream()
+                        .map(assembler::toModel)
+                        .collect(Collectors.toList());
 
-            return ResponseEntity.ok(employeeResources);
-        } catch (Exception e) {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "An error occurred while fetching employees.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(errorResponse);
+                return ResponseEntity.ok(employeeResources);
+            } catch (Exception e) {
+                Map<String, String> errorResponse = new HashMap<>();
+                errorResponse.put("error", "An error occurred while fetching employees.");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(errorResponse);
+            }
         }
+        return ResponseEntity.status(401).body("Invalid API Key");
     }
 
     @GetMapping("/{id}")

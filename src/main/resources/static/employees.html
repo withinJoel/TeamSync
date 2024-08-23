@@ -166,22 +166,36 @@
     }
 
     function fetchDepartments() {
-        fetch(departmentApiUrl)
-            .then(response => response.json())
+        const apiKey = 'xyXfX4pzoBhJYIMygh1eu8qPvlp8dkBEjKRzzOK90yQYgV9W6jMrHBbDdyM2tPuT';
+
+        fetch(departmentApiUrl, {
+            method: 'GET',
+            headers: {
+                'API-Key': apiKey,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('API key invalid or network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 const select = document.getElementById('department-id');
                 select.innerHTML = '';
                 data.forEach(department => {
                     const option = document.createElement('option');
-                    for (let i = 0; i < 11; i++) {
-                        if (department.id = i){
-                            option.textContent = department.name;
-                            departmentNames.push(department.name);
-                        }
-                    }
+                    option.value = department.id;
+                    option.textContent = department.name;
                     select.appendChild(option);
+                    departmentNames.push(department.name);
                 });
                 M.FormSelect.init(select); // Initialize Materialize select component
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle the error appropriately in your UI
             });
     }
 

@@ -14,6 +14,11 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+
+    public boolean isValidToken(String token) {
+        return employeeRepository.existsByToken(token);
+    }
+
     // Retrieve all employees
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
