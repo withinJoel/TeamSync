@@ -78,6 +78,19 @@
         .btn-delete:hover {
             background-color: #d32f2f;
         }
+        .btn-view {
+            background-color: #1a73e8;
+            color: #ffffff;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-view:hover {
+            background-color: #0f6ce5;
+        }
         nav {
             background-color: #ffffff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -228,15 +241,15 @@
 
                 const thead = document.createElement('thead');
                 thead.innerHTML = `
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Age</th>
-                <th>Department</th>
-                <th>Access Token</th>
-                <th>Actions</th>
-            </tr>
-        `;
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Department</th>
+            <th>Access Token</th>
+            <th>Actions</th>
+        </tr>
+    `;
                 table.appendChild(thead);
 
                 const tbody = document.createElement('tbody');
@@ -244,15 +257,18 @@
                 data.forEach(employee => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                <td>${employee.name}</td>
-                <td>${employee.email}</td>
-                <td>${employee.age}</td>
-                <td>${employee.department}</td>
-                <td>${employee.token}</td>
-                <td>
-                    <button class="btn-delete" onclick="deleteEmployee(${employee.id})">Delete</button>
-                </td>
-            `;
+            <td>${employee.name}</td>
+            <td>${employee.email}</td>
+            <td>${employee.age}</td>
+            <td>${employee.department}</td>
+            <td>
+                <button class="btn-view" onclick="viewToken(this, '${employee.token}')">View Token</button>
+                <span class="token-display" style="display: none;"></span>
+            </td>
+            <td>
+                <button class="btn-delete" onclick="deleteEmployee(${employee.id})">Delete</button>
+            </td>
+        `;
                     tbody.appendChild(row);
                 });
 
@@ -263,6 +279,18 @@
                 console.error('Error:', error);
                 // Handle the error appropriately in your UI
             });
+    }
+
+    function viewToken(button, token) {
+        const tokenSpan = button.nextElementSibling;
+        if (tokenSpan.style.display === 'none') {
+            tokenSpan.textContent = token;
+            tokenSpan.style.display = 'inline';
+            button.textContent = 'Hide Token';
+        } else {
+            tokenSpan.style.display = 'none';
+            button.textContent = 'View Token';
+        }
     }
 
 
