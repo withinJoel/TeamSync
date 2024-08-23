@@ -232,7 +232,7 @@
             .catch(error => console.error('Error fetching employees:', error));
     }
 
-
+    fetchEmployees();
     function fetchProjects() {
         const apiKey = 'xyXfX4pzoBhJYIMygh1eu8qPvlp8dkBEjKRzzOK90yQYgV9W6jMrHBbDdyM2tPuT'; // Replace with your actual API key
 
@@ -304,6 +304,7 @@
             })
             .catch(error => console.error('Error fetching projects:', error));
     }
+    fetchEmployees();
     fetchProjects();
 
 
@@ -427,8 +428,8 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        fetchProjects();
         fetchEmployees();
+        fetchProjects();
     });
 </script>
 </body>
