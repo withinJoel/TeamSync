@@ -4,6 +4,9 @@ Made with 💖 by Joel Jolly.
 # About
 * TeamSync is a comprehensive employee management and project tracking application designed to streamline the way you manage your workforce and projects. With TeamSync, you can effortlessly keep track of employee details, monitor the status of ongoing projects, and manage department information, all from a unified platform.
 
+# Star History
+[![Star History Chart](https://api.star-history.com/svg?repos=withinjoel/teamsync&type=Timeline)](https://star-history.com/#withinjoel/teamsync&Timeline)
+
 # Project Current Progress
 1. Install Required Tools: ✅
    * Java ✅
