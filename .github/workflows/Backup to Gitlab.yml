@@ -27,4 +27,4 @@ jobs:
       # Step 3: Force push to GitLab
       - name: Force push to GitLab
         run: |
-          git push -u gitlab main --force
+          git push gitlab main
